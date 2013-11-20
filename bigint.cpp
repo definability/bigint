@@ -172,73 +172,11 @@ namespace bigint {
         }
 
         BigInt& operator>>=(t_size shift) {
-            /*
-            if (shift==0) {
-                return *(this);
-            }
-            else if (shift>=NUMBER_CAPACITY) {
-                this->setNull();
-                return *(this);
-            }
-            else if (shift<BLOCK_SIZE) {
-                t_bint tmp1=0, tmp2=0;
-                for (t_size i=BLOCKS_NUMBER; i>0; --i) {
-                    tmp2 = this->value[i] << (BLOCK_SIZE-shift);
-                    this->value[i] >>= shift;
-                    this->value[i] |= tmp1;
-                    tmp1 = tmp2;
-                }
-                return *(this);
-            }
-            else if (shift%BLOCK_SIZE == 0) {
-                for (t_size i=0; i<BLOCKS_NUMBER-shift; i++)
-                    this->value[i]=this->value[i+shift];
-                for (t_size i=BLOCKS_NUMBER-shift; i<BLOCKS_NUMBER; i++)
-                    this->value[i]=0;
-                return *(this);
-            }
-            else {
-                (*this)>>=shift/BLOCK_SIZE;
-                (*this)>>=shift%BLOCK_SIZE;
-                return *(this);
-            }
-            */
             shr(this->value,shift);
             return *(this);
         }
 
         BigInt& operator<<=(t_size shift) {
-            /*
-            if (shift==0) {
-                return *(this);
-            }
-            else if (shift>=NUMBER_CAPACITY) {
-                this->setNull();
-                return *(this);
-            }
-            else if (shift<BLOCK_SIZE) {
-                t_bint tmp1=0, tmp2=0;
-                for (t_size i=0; i<BLOCKS_NUMBER; i++) {
-                    tmp2 = this->value[i] >> (BLOCK_SIZE-shift);
-                    this->value[i] <<= shift;
-                    this->value[i] |= tmp1;
-                    tmp1 = tmp2;
-                }
-                return *(this);
-            }
-            else if (shift%BLOCK_SIZE == 0) {
-                for (t_size i=BLOCKS_NUMBER; i>BLOCKS_NUMBER-shift; --i)
-                    this->value[i]=this->value[i-shift];
-                for (t_size i=0; i<=BLOCKS_NUMBER-shift; i++)
-                    this->value[i]=0;
-                return *(this);
-            }
-            else {
-                (*this)<<=shift/BLOCK_SIZE;
-                (*this)<<=shift%BLOCK_SIZE;
-                return *(this);
-            }
-            */
             shl(this->value,shift,BLOCKS_NUMBER);
             return *(this);
         }
@@ -265,43 +203,6 @@ namespace bigint {
                 tmp_value=this->value[i];
                 this->value[i]+=source[i]+carry;
                 carry = ( (tmp_value&source[i]) | (source[i]|tmp_value) & (~this->value[i]) ) >> (BLOCK_SIZE-1);
-                /*
-                tmp_carry = (carry && (this->value[i]+source[i]==BLOCK_MAX_VALUE))\
-                            || (this->value[i]+source[i]<this->value[i]);
-                this->value[i]+=source[i]+carry;carry = tmp_carry;
-                if (source[i]==0 && carry==0)
-                    continue;
-                else if (source[i]!=0 && carry==0) {
-                    if (BLOCK_MAX_VALUE-this->value[i]<source[i]) {
-                        this->value[i]=source[i]-(BLOCK_MAX_VALUE-this->value[i])-1;
-                        carry = 1;
-                    }
-                    else
-                        this->value[i]+=source[i];
-                    continue;
-                }
-                else if (source[i]==0 && carry==1) {
-                    if (this->value[i]==BLOCK_MAX_VALUE)
-                        this->value[i]=0;
-                    else {
-                        this->value[i]++;
-                        carry=0;
-                    }
-                    continue;
-                }
-                else {
-                    if (BLOCK_MAX_VALUE-this->value[i]<source[i])
-                        this->value[i]=source[i]-\
-                                       (BLOCK_MAX_VALUE-this->value[i]);
-                    else if (this->value[i]==0 && source[i]==BLOCK_MAX_VALUE)
-                        this->value[i]=0;
-                    else {
-                        this->value[i]=source[i]+1;
-                        carry=0;
-                    }
-                    continue;
-                }
-                */
             }
         }
 
