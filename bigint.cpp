@@ -4,17 +4,21 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
+#include "config.h"
+#include "base.h"
+#include "boolean.h"
+#include "mul.h"
+#include "div.h"
+#include "modular.h"
+#include "bigint.h"
 
+/*
 typedef long t_size;
 
 typedef unsigned long ULONG;
 typedef unsigned long t_bint;
 typedef signed long t_sbint;
 typedef long double t_float;
-/*
-typedef unsigned char t_bint;
-typedef signed char t_sbint;
-*/
 
 //TODO: bits->bytes sizes
 const unsigned long BLOCK_SIZE = 8*sizeof(t_bint); //64;
@@ -24,6 +28,7 @@ const unsigned long ULONG_SIZE = sizeof(ULONG);
 
 const t_bint BLOCK_MAX_VALUE = 0xFFFFFFFFFFFFFFFF;
 const t_bint BLOCK_MAX_BIT = (long)1<<(BLOCK_SIZE-1);
+*/
 
 using namespace std;
 
@@ -49,9 +54,11 @@ namespace bigint {
     // TODO: provide this enum
     enum CmpResult { EQUAL, GREATER, LOWER };
 
+    /*
     const unsigned char CMP_EQUAL = 0;
     const unsigned char CMP_GREATER = 1;
     const unsigned char CMP_LOWER = 2;
+    */
 
     void displayBI(t_bint* a, t_size size=BLOCKS_NUMBER) {
         cerr<<"0x"<<hex;
@@ -86,6 +93,7 @@ namespace bigint {
         }
     }
 
+    /*
     unsigned char cmp(t_bint* a, t_bint b, t_size size=BLOCKS_NUMBER) {
         if (a[0]>b) return CMP_GREATER;
         for (t_size i=1; i<size; i++) {
@@ -167,7 +175,9 @@ namespace bigint {
             a[size]=0;
         }
     }
+    */
 
+    /*
     void swl(t_bint *a, t_size shift, t_size size=BLOCKS_NUMBER) {
         if (shift>=size)
             setNull(a,size);
@@ -259,7 +269,9 @@ namespace bigint {
         cerr<<"</shift>"<<endl;
         return;
     }
+    */
 
+    /*
     unsigned char getCarry(t_bint a, t_bint b, t_bint result) {
         return ( (a&b) | (b|a) & (~result) ) >> (BLOCK_SIZE-1);
     }
@@ -315,11 +327,13 @@ namespace bigint {
             }
         }
     }
+    */
 
     /**
       * Karatsuba's multiplication method (a=a*b).
       * That's why parameter `a' must have the resulting length.
       */
+    /*
     void mul(t_bint* a, t_bint* b, 
             t_size sizeA = BLOCKS_NUMBER, t_size sizeB = 0) {
         if (!sizeB || sizeB>sizeA) sizeB=sizeA;
@@ -332,9 +346,6 @@ namespace bigint {
         else {
             t_size mswA=msw(a,sizeA), mswB=msw(b,sizeB);
             if ((mswA|mswB)==0) {
-                /*
-                mov(a,mulWords(a[0],b[0]),2);
-                */
                 // 20-30% productivity increase
                 asm (
                         "mul %3"
@@ -448,10 +459,13 @@ namespace bigint {
             }
         }
     }
+    */
+
 
     /**
       * Fast division of two numbers with equal sizes
       */
+    /*
     void fDiv(t_bint* a, t_bint* b, t_bint* remainder=NULL,
             t_size size=BLOCKS_NUMBER, t_size sizeR=0) {
         if (sizeR==0 && remainder!=NULL) sizeR=size;
@@ -468,20 +482,10 @@ namespace bigint {
             }
             shl(a,1,size);
             shl(b,1,size);
-            /*
-            shr(b,2,size);
-            shl(a,1,size);
-            shl(b,1,size);
-            */
             fDiv(a,b,NULL,new_size);
             cerr<<"</greater>"<<endl;
             return;
         }
-        /*
-        t_float divider=1/(2.0*(1<<(sizeof(t_bint)-1)));
-        t_float u=a[size-1]+a[size-2]*divider;
-        t_float v=b[size-1]+b[size-2]*divider;
-        */
         t_float divider=(2.0*(1<<(sizeof(t_bint)-1)));
         t_float u=a[size-1]+a[size-2]/divider;
         t_float v=b[size-1]+b[size-2]/divider;
@@ -491,10 +495,12 @@ namespace bigint {
         a[0]=iResult;
         cerr<<"</eqdiv>"<<endl;
     }
+    */
 
     /**
       * Fast division of big integer by word
       */
+        /*
     void fDiv(t_bint* a, t_bint b, t_bint* remainder=NULL,
             t_size size=BLOCKS_NUMBER, t_size sizeR=0) {
         if (sizeR==0 && remainder!=NULL) sizeR=1;
@@ -506,21 +512,19 @@ namespace bigint {
         if (!sizeB) sizeB=sizeA;
         if (sizeR==0 && remainder!=NULL) sizeR=sizeB;
     }
+    */
 
 
     /**
       * Divide a by b. Keep result (quotient) in a.
       */
+        /*
     void mod(t_bint* a, t_bint* b, t_size sizeA=BLOCKS_NUMBER, t_size sizeB=0,
             t_bint* quotient=NULL, t_size sizeQ=0) {
         if (!sizeB) sizeB=sizeA;
         if (quotient!=NULL && sizeQ>0) setNull(quotient, sizeQ);
         int cmpResult=cmp(a,b,sizeA,sizeB);
         t_size n, m;
-        /*
-        t_size n=msw(b,sizeB)+1;
-        t_size m=msw(a,sizeA)+1-n;
-        */
         switch (cmpResult) {
             case CMP_LOWER:
                 //setNull(a,sizeA);
@@ -538,13 +542,6 @@ namespace bigint {
                     if (quotient!=NULL && sizeQ>0) quotient[0]=a[0]/b[0];
                     a[0]%=b[0];
                 }
-                /*
-                else if (m==0) {
-                    //fDiv(a, b, remainder, sizeA, n);
-                }
-                else if (n==1) {
-                    //fDiv(a, b[0], remainder, n+m);
-                }*/
                 else {
                     cerr<<"<mod>"<<endl;
                     t_size mswA = msw(a, sizeA);
@@ -588,49 +585,6 @@ namespace bigint {
                     delete[] divider;
                         cerr<<"DELETED"<<endl;
                     //}
-
-
-                    /*
-                    t_size sizeD = mswA+2;
-                    t_size sizeDt = mswA+2;
-                    t_bint* divider = new t_bint[sizeD];
-                    t_bint* divident = new t_bint[sizeDt];
-                    shl(a,(BLOCK_SIZE-(n+m-BLOCK_SIZE)%BLOCK_SIZE)%BLOCK_SIZE,sizeA);
-                    shl(b,(BLOCK_SIZE-(n-BLOCK_SIZE)%BLOCK_SIZE)%BLOCK_SIZE,sizeB);
-                    setNull(divider,sizeD);
-                    mov(divider,b,sizeB);
-                    swl(divider,mswA-mswB,sizeD);
-
-                    setNull(divident,sizeDt);
-                    mov(divident,a,mswA+1);
-
-                    for (t_size i=0; i<=m; i++) {
-                    //while (m>=0) {
-                        tmp_cmp = cmp(divident,divider,sizeDt,sizeD);
-                        tmp = (bool)(tmp_cmp & (CMP_EQUAL|CMP_GREATER));
-                        cerr<<endl;
-                        displayBI(divident,sizeDt);
-                        cerr<<":";
-                        displayBI(divider,sizeD);
-                        cerr<<endl;
-                        if (tmp) {
-                            sub(divident,divider,sizeDt,sizeD);
-                        }
-                        shl(divident,1,sizeDt);
-                        if (quotient!=NULL && sizeQ>0) {
-                            shl(quotient,1,sizeQ);
-                            quotient[0]|=tmp;
-                        }
-                    //    m--;
-                    }
-                    if (!tmp) cerr<<"NOTMP"<<endl;
-                    else cerr<<"YTMP"<<endl;
-                    cerr<<"MSB: "<<msb(divident,sizeDt)
-                        <<"; "<<msb(divident,sizeD);
-                    shr(divident,m+1,sizeDt);
-                    setNull(a,sizeA);
-                    mov(a,divident,sizeDt);
-                    */
                     cerr<<"</mod>"<<endl;
                 }
                 break;
@@ -649,7 +603,9 @@ namespace bigint {
         setNull(a,sizeA);
         mov(a,quotient,sizeQ);
     }
+    */
 
+        /*
     void pow_mod(t_bint* a, t_bint* b, t_bint* n,
             t_size sizeA=BLOCKS_NUMBER, t_size sizeB=0, t_size sizeN=0) {
         if (!sizeB || sizeB>sizeA) sizeB=sizeA;
@@ -681,6 +637,7 @@ namespace bigint {
         delete[] tmp;
         delete[] result;
     }
+    */
 
     class BigInt {
     private:

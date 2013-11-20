@@ -1,0 +1,8 @@
+unsigned char cmp(t_bint* a, t_bint b, t_size size=BLOCKS_NUMBER);
+unsigned char cmp(t_bint* a, t_bint* b,
+        t_size size1 = BLOCKS_NUMBER, t_size size2 = 0);
+void mov(t_bint* a, t_bint* b, t_size size=BLOCKS_NUMBER);
+t_size msw(t_bint* a, t_size size=BLOCKS_NUMBER);
+t_size msb(t_bint* a, t_size size=BLOCKS_NUMBER);
+bool isNull(t_bint* a, t_size size=BLOCKS_NUMBER);
+void setNull(t_bint* a, t_size size=BLOCKS_NUMBER);
