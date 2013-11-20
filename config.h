@@ -21,8 +21,4 @@ const unsigned long ULONG_SIZE = sizeof(ULONG);
 const t_bint BLOCK_MAX_VALUE = 0xFFFFFFFFFFFFFFFF;
 const t_bint BLOCK_MAX_BIT = (long)1<<(BLOCK_SIZE-1);
 
-const unsigned char CMP_EQUAL = 0;
-const unsigned char CMP_GREATER = 1;
-const unsigned char CMP_LOWER = 2;
-
 using namespace std;
