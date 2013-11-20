@@ -3,7 +3,7 @@ BigInt
 
 My biginteger realization with Boost library tests. Just a lab for my university
 - [x] Boolean arithmetics
-- - [x] first
+-- [x] first
 - [x] Basic arithmetics
 - [x] Class with overloaded operators
 - [ ] Modular arithmetic
