@@ -4,13 +4,13 @@ BigInt
 My biginteger realization with Boost library tests. Just a lab for my university
 
 How to make
-===
+-----------
 ```bash
 make all
 ```
 command compiles it depending on your system architecture (64-bit or 32-bit). Executable is bigint
 How to run
-===
+----------
 It's better to pipe stderr somewhere
 ```bash
 ./bigint 2>/dev/null
