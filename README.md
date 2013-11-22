@@ -2,8 +2,8 @@ BigInt
 ======
 
 My biginteger realization with Boost library tests. Just a lab for my university
-- [x] Boolean arithmetics
-- [x] Basic arithmetics
+- [x] Boolean arithmetic
+- [x] Basic arithmetic
 - [x] Class with overloaded operators
 - [ ] Modular arithmetic
 - [ ] Boost Test Library
