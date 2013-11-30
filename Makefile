@@ -39,3 +39,8 @@ arch:
 	echo $(ARCH)
 flags:
 	echo $(CPPFLAGS)
+
+
+test_config: $(OBJECTS) $(TSTDIR)/config_test.o
+	$(TEST_COMPILATION_PREFIX) config_test.o -o config_test $(TEST_COMPILATION_SUFFIX)
+	./config_test
