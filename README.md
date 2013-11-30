@@ -16,6 +16,10 @@ make all
 command compiles it depending on your system architecture (64-bit or 32-bit). Executable is bigint
 How to run
 ----------
+Go to the ```bin``` directory:
+```bash
+cd bin
+```
 It's better to pipe stderr somewhere
 ```bash
 ./bigint 2>/dev/null
