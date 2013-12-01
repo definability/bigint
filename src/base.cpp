@@ -1,6 +1,11 @@
 #include "config.h"
 #include "base.h"
 
+
+void LOG(string message, unsigned char ll) {
+    if (LOG_LEVEL&ll) cerr<<message<<endl;
+}
+
 unsigned char cmp(t_bint* a, t_bint b, t_size size) {
     if (a[0]>b) return CMP_GREATER;
     for (t_size i=1; i<size; i++) {
@@ -47,7 +52,7 @@ t_size msw(t_bint* a, t_size size) {
         if (a[size]>0)
             return size;
     }
-    cerr<<"<size>BLANK</size>"<<endl;
+
     return -1;
 }
 

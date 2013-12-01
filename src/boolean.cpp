@@ -27,11 +27,11 @@ void swr(t_bint *a, t_size shift, t_size size) {
 }
 
 void shl(t_bint* a, t_size shift, t_size size) {
-    cerr<<"<shift>"<<endl;
+
     if (shift==0) {
     }
     else if (shift>=size*BLOCK_SIZE) {
-        cerr<<"Shift set null"<<endl;
+
         setNull(a,size);
     }
     else if (shift<BLOCK_SIZE) {
@@ -45,12 +45,10 @@ void shl(t_bint* a, t_size shift, t_size size) {
     }
     else if (shift%BLOCK_SIZE == 0) {
         t_size i, blockShift=shift/BLOCK_SIZE;
-        cerr<<"size="<<size<<endl;
-        cerr<<"blockShift="<<blockShift<<endl;
+
+
         for (i=size-1; i>=blockShift; i--) {
             a[i]=a[i-blockShift];
-            cerr<<"a["<<i<<"]=a["<<i-blockShift<<"]"
-                <<"="<<(int)a[i]<<endl;
         }
         for (i=0; i<blockShift; i++)
             a[i]=0;
@@ -59,11 +57,11 @@ void shl(t_bint* a, t_size shift, t_size size) {
         shl(a,shift-shift%BLOCK_SIZE,size);
         shl(a,shift%BLOCK_SIZE,size);
     }
-    cerr<<"</shift>"<<endl;
+
 }
 
 void shr(t_bint* a, t_size shift, t_size size) {
-    cerr<<"<shift>"<<endl;
+
     if (shift==0) {
     }
     else if (shift>=size*BLOCK_SIZE) {
@@ -90,6 +88,6 @@ void shr(t_bint* a, t_size shift, t_size size) {
         shr(a,shift%BLOCK_SIZE);
         shr(a,shift-shift%BLOCK_SIZE);
     }
-    cerr<<"</shift>"<<endl;
+
     return;
 }

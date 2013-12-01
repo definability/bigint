@@ -157,6 +157,12 @@ public:
         return (*this);
     }
 
+    static BigInt MAX_VALUE() {
+        BigInt result;
+        result--;
+        return result;
+    }
+
     const t_bint operator[] (t_size i) const {
         return this->value[i];
     }
@@ -289,9 +295,18 @@ public:
     }
 
     BigInt& operator*=(const BigInt& source) {
-        // Karatsuba
         mul(this->value,source.value,BLOCKS_NUMBER);
         return *this;
+    }
+
+    BigInt operator*(const BigInt& source) const {
+        BigInt result(*this);
+        result*=source;
+        return result;
+    }
+
+    friend BigInt operator*(t_bint operand1, const BigInt& operand2) {
+        return operand2*operand1;
     }
 
     BigInt& operator/=(const BigInt& source) {
@@ -299,9 +314,29 @@ public:
         return *this;
     }
 
+    BigInt operator/(const BigInt& source) const {
+        BigInt result(*this);
+        result/=source;
+        return result;
+    }
+
+    friend BigInt operator/(t_bint operand1, const BigInt& operand2) {
+        return BigInt(operand1)/operand2;
+    }
+
     BigInt& operator%=(const BigInt& source) {
         mod(this->value, source.value);
         return *this;
+    }
+
+    BigInt operator%(const BigInt& source) const {
+        BigInt result(*this);
+        result%=source;
+        return result;
+    }
+
+    friend BigInt operator%(t_bint operand1, const BigInt& operand2) {
+        return BigInt(operand1)%operand2;
     }
 
     bool operator>=(const BigInt& source) const {

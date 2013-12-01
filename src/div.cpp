@@ -3,12 +3,13 @@
 #include "boolean.h"
 #include "arithmetics.h"
 #include "div.h"
-
+#include "exceptions.h"
 
 /**
   * Divide a by b. Keep result (reminder) in a.
   */
 void mod(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB, t_bint* quotient, t_size sizeQ) {
+    if (isNull(b)) throw DBZException();
     if (!sizeB) sizeB=sizeA;
     if (quotient!=NULL && sizeQ>0) setNull(quotient, sizeQ);
     int cmpResult=cmp(a,b,sizeA,sizeB);
@@ -29,7 +30,7 @@ void mod(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB, t_bint* quotient, t_s
             a[0]%=b[0];
         }
         else {
-            cerr<<"<mod>"<<endl;
+
             t_size mswA = msw(a, sizeA);
             t_size mswB = msw(b, sizeB);
             t_size sizeD = mswA+2;
@@ -63,12 +64,12 @@ void mod(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB, t_bint* quotient, t_s
                 sub(a,divider,sizeA,sizeD);
             }
             delete[] divider;
-            cerr<<"</mod>"<<endl;
+
         }
         break;
     default:
         // Something's gone bad
-        cerr<<"Unknown cmp result reached!"<<cmpResult<<endl;
+
         break;
     }
 }

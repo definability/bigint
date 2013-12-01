@@ -5,7 +5,7 @@
 using namespace std;
 
 int main() {
-    cerr<<"<xml>"<<endl;
+
     bigint::BigInt bi_a(0x06);
     bigint::BigInt bi_b(0x94);
     bigint::BigInt bi_n(0x94);
@@ -34,9 +34,9 @@ int main() {
         cout<<"n="<<bi_n<<endl;
         cout<<"print '"<<bi_a<<", "<<bi_b<<", "<<bi_n<<"'"<<endl;
         //cout<<"print 'Result is "<<bi_a.modPower(bi_b, bi_n)<<"'"<<endl;
-        cerr<<"PRELUDE"<<endl;
+
         bi_a.modPower(bi_b, bi_n);
-        cerr<<"DONE"<<endl;
+
         cout<<"print 'Result is "<<bi_a<<"'"<<endl;
         cout<<"result="<<bi_a<<"==(a**b)%n"<<endl;
         cout<<"print result"<<endl;
@@ -137,6 +137,6 @@ int main() {
         cout<<"print hex(a*b-"<<bi_b<<")"<<endl;
     }
     */
-    cerr<<"</xml>"<<endl;
+
     return 0;
 }
