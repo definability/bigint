@@ -184,14 +184,26 @@ public:
         return result;
     }
 
-    BigInt& operator>>=(t_size shift) {
+    BigInt& operator>>=(const t_size shift) {
         shr(this->value,shift);
         return *(this);
     }
 
-    BigInt& operator<<=(t_size shift) {
+    BigInt operator>>(const t_size shift) const {
+        BigInt result(*this);
+        result>>=shift;
+        return result;
+    }
+
+    BigInt& operator<<=(const t_size shift) {
         shl(this->value,shift,BLOCKS_NUMBER);
         return *(this);
+    }
+
+    BigInt operator<<(const t_size shift) const {
+        BigInt result(*this);
+        result<<=shift;
+        return result;
     }
 
     BigInt& operator|=(const BigInt& operand) {
@@ -199,14 +211,32 @@ public:
             this->value[i]|=operand[i];
     }
 
+    BigInt operator|(const BigInt& operand) const {
+        BigInt result(*this);
+        result|=operand;
+        return result;
+    }
+
     BigInt& operator&=(const BigInt& operand) {
         for (t_size i=0; i<BLOCKS_NUMBER; i++)
             this->value[i]&=operand[i];
     }
 
+    BigInt operator&(const BigInt& operand) const {
+        BigInt result(*this);
+        result&=operand;
+        return result;
+    }
+
     BigInt& operator^=(const BigInt& operand) {
         for (t_size i=0; i<BLOCKS_NUMBER; i++)
             this->value[i]^=operand[i];
+    }
+
+    BigInt operator^(const BigInt& operand) const {
+        BigInt result(*this);
+        result^=operand;
+        return result;
     }
 
     BigInt& operator+=(const BigInt& source) {

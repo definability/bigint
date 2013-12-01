@@ -17,11 +17,11 @@ COMPILATION_PREFIX=$(CC) $(CPPFLAGS) $(OBJECTS)
 TEST_COMPILATION_SUFFIX=-lboost_system -lboost_thread -lboost_unit_test_framework
 MAIN_SRC=$(SRCDIR)/main.cpp
 MAIN_OBJ=$(MAIN_SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
-TESTS=config
+TESTS=config bigint
 TESTS_PARAMETERS=--log_level=all
 
 objects:
-	echo $(OBJECTS)
+	@echo $(OBJECTS)
 
 all: $(OBJECTS)
 	mkdir -p $(BINDIR)
@@ -38,14 +38,22 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cpp
 $(MAIN_SRC): $(SRCDIR)/bigint.cpp
 
 arch:
-	echo $(ARCH)
+	@echo $(ARCH)
 flags:
-	echo $(CPPFLAGS)
+	@echo $(CPPFLAGS)
 
+
+available_tests:
+	@echo $(TESTS)
 
 test_config: $(OBJECTS) $(TSTDIR)/config.cpp
 	$(COMPILATION_PREFIX) $(TSTDIR)/config.cpp -o $(TSTDIR)/config $(TEST_COMPILATION_SUFFIX)
 	$(TSTDIR)/config $(TESTS_PARAMETERS)
+
+test_config_errors: $(OBJECTS) $(TSTDIR)/config.cpp
+	$(COMPILATION_PREFIX) $(TSTDIR)/config.cpp -o $(TSTDIR)/config $(TEST_COMPILATION_SUFFIX)
+	$(TSTDIR)/config --log_level=error
+
 
 $(TSTDIR)/bigint.cpp: $(SRCDIR)/bigint.cpp
 
