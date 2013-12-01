@@ -6,7 +6,7 @@ My biginteger realization with Boost library tests. Just a lab for my university
 - [x] Basic arithmetic
 - [x] Class with overloaded operators
 - [ ] Modular arithmetic
-- [/] Boost Test Library
+- [-] Boost Test Library
 
 How to make
 -----------
