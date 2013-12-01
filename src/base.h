@@ -1,7 +1,7 @@
 // TODO: provide this enum
 enum CmpResult { EQUAL, GREATER, LOWER };
 
-const unsigned char CMP_EQUAL = 0;
+const unsigned char CMP_EQUAL = 4;
 const unsigned char CMP_GREATER = 1;
 const unsigned char CMP_LOWER = 2;
 

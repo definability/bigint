@@ -13,17 +13,19 @@ TSTDIR=tests
 SOURCE_FILES=base.cpp boolean.cpp arithmetics.cpp mul.cpp div.cpp modular.cpp
 SOURCES=$(SOURCE_FILES:%=$(SRCDIR)/%)
 OBJECTS=$(SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
-TEST_COMPILATION_PREFIX=$(CC) $(CPPFLAGS) $(OBJECTS)
+COMPILATION_PREFIX=$(CC) $(CPPFLAGS) $(OBJECTS)
 TEST_COMPILATION_SUFFIX=-lboost_system -lboost_thread -lboost_unit_test_framework
 MAIN_SRC=$(SRCDIR)/main.cpp
 MAIN_OBJ=$(MAIN_SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+TESTS=config
+TESTS_PARAMETERS=--log_level=all
 
 objects:
 	echo $(OBJECTS)
 
 all: $(OBJECTS)
 	mkdir -p $(BINDIR)
-	$(CC) $(CPPFLAGS) $(OBJECTS) $(MAIN_OBJ) -o $(BINDIR)/bigint
+	$(COMPILATION_PREFIX) $(MAIN_OBJ) -o $(BINDIR)/bigint
 
 clean:
 	rm -rf $(BINDIR)
@@ -41,6 +43,17 @@ flags:
 	echo $(CPPFLAGS)
 
 
-test_config: $(OBJECTS) $(TSTDIR)/config_test.o
-	$(TEST_COMPILATION_PREFIX) config_test.o -o config_test $(TEST_COMPILATION_SUFFIX)
-	./config_test
+test_config: $(OBJECTS) $(TSTDIR)/config.cpp
+	$(COMPILATION_PREFIX) $(TSTDIR)/config.cpp -o $(TSTDIR)/config $(TEST_COMPILATION_SUFFIX)
+	$(TSTDIR)/config $(TESTS_PARAMETERS)
+
+$(TSTDIR)/bigint.cpp: $(SRCDIR)/bigint.cpp
+
+test_bigint: $(OBJECTS)
+	$(COMPILATION_PREFIX) $(TSTDIR)/bigint.cpp -o $(TSTDIR)/bigint $(TEST_COMPILATION_SUFFIX)
+	$(TSTDIR)/bigint $(TESTS_PARAMETERS)
+
+
+test_bigint_errors: $(OBJECTS)
+	$(COMPILATION_PREFIX) $(TSTDIR)/bigint.cpp -o $(TSTDIR)/bigint $(TEST_COMPILATION_SUFFIX)
+	$(TSTDIR)/bigint --log_level=error

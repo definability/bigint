@@ -83,6 +83,7 @@ private:
         this->value[0] = source;
     }
 
+    /*
     void copy(t_sbint source) {
         if (source>0) {
             this->copy((t_bint)source);
@@ -96,6 +97,7 @@ private:
             this->value[0] = (t_bint)source-1;
         }
     }
+    */
 
     void copy(t_bint* source, t_size size=BLOCKS_NUMBER) {
         this->setNull();
@@ -111,6 +113,7 @@ private:
 public:
     BigInt() {
         this->value = new t_bint[BLOCKS_NUMBER];
+        this->setNull();
     }
 
     BigInt(const BigInt& source) {
@@ -121,6 +124,11 @@ public:
     BigInt(t_bint source) {
         this->value = new t_bint[BLOCKS_NUMBER];
         this->copy(source);
+    }
+
+    BigInt(int source) {
+        this->value = new t_bint[BLOCKS_NUMBER];
+        this->copy((t_bint)source);
     }
 
     BigInt(t_bint* source, t_size size=BLOCKS_NUMBER) {
@@ -153,22 +161,27 @@ public:
         return this->value[i];
     }
 
+    /*
     BigInt& operator=(t_bint source) {
         this->copy(source);
     }
+    */
 
     BigInt& operator=(const BigInt& source) {
         this->copy(source);
     }
 
+    /*
     BigInt& operator=(t_sbint source) {
         this->copy(source);
     }
+    */
 
-    BigInt& operator~() {
+    BigInt operator~() {
+        BigInt result(*this);
         for (int i=0; i<BLOCKS_NUMBER; i++)
-            this->value[i]=~(this->value[i]);
-        return (*this);
+            result.value[i]=~(this->value[i]);
+        return result;
     }
 
     BigInt& operator>>=(t_size shift) {
@@ -206,20 +219,43 @@ public:
         }
     }
 
-    BigInt& operator+=(t_bint* source) {
-        t_bint carry=0; //, tmp_carry=0;
-        t_bint tmp_value;
-        for (t_size i=0; i<BLOCKS_NUMBER; i++) {
-            tmp_value=this->value[i];
-            this->value[i]+=source[i]+carry;
-        }
-        return *this;
+    BigInt operator+(const BigInt& operand) const {
+        BigInt result(*this);
+        result += operand;
+        return result;
+    }
+
+    BigInt& operator++() {
+        return (*this+=1);
+    }
+
+    BigInt operator++(int) {
+        BigInt result(*this);
+        *this+=1;
+        return result;
     }
 
     BigInt& operator-=(BigInt source) {
         (*this)+=~source;
         (*this)+=BigInt(1);
         return *this;
+    }
+
+    BigInt operator-(const BigInt& operand) const {
+        BigInt result(*this);
+        result -= operand;
+        return result;
+    }
+
+    BigInt& operator--() {
+        return (*this-=1);
+    }
+
+
+    BigInt operator--(int) {
+        BigInt result(*this);
+        *this-=1;
+        return result;
     }
 
     BigInt& operator*=(const BigInt& source) {
@@ -238,44 +274,52 @@ public:
         return *this;
     }
 
-    bool operator>=(const BigInt& source) {
-        return cmp(this->value, source.value) & CMP_GREATER | CMP_EQUAL;
+    bool operator>=(const BigInt& source) const {
+        return cmp(this->value, source.value) & (CMP_GREATER | CMP_EQUAL);
     }
 
-    bool operator==(const BigInt& source) {
+    bool operator==(const BigInt& source) const {
         return cmp(this->value, source.value) & CMP_EQUAL;
     }
 
-    bool operator<=(const BigInt& source) {
-        return cmp(this->value, source.value) & CMP_LOWER | CMP_EQUAL;
+    bool operator!=(const BigInt& source) const {
+        return !(*this==source);
     }
 
-    bool operator>(const BigInt& source) {
+    bool operator<=(const BigInt& source) const {
+        return cmp(this->value, source.value) & (CMP_LOWER | CMP_EQUAL);
+    }
+
+    bool operator>(const BigInt& source) const {
         return cmp(this->value, source.value) & CMP_GREATER;
     }
 
-    bool operator<(const BigInt& source) {
+    bool operator<(const BigInt& source) const {
         return cmp(this->value, source.value) & CMP_LOWER;
     }
 
-    bool operator>=(const t_bint source) {
-        return cmp(this->value, source) & CMP_GREATER | CMP_EQUAL;
+    bool operator>=(const t_bint source) const {
+        return cmp(this->value, source) & (CMP_GREATER | CMP_EQUAL);
     }
 
-    bool operator==(const t_bint source) {
+    bool operator==(const t_bint source) const {
         return cmp(this->value, source) & CMP_EQUAL;
     }
 
-    bool operator<=(const t_bint source) {
-        return cmp(this->value, source) & CMP_LOWER | CMP_EQUAL;
+    bool operator<=(const t_bint source) const {
+        return cmp(this->value, source) & (CMP_LOWER | CMP_EQUAL);
     }
 
-    bool operator>(const t_bint source) {
+    bool operator>(const t_bint source) const {
         return cmp(this->value, source) & CMP_GREATER;
     }
 
-    bool operator<(const t_bint source) {
+    bool operator<(const t_bint source) const {
         return cmp(this->value, source) & CMP_LOWER;
+    }
+
+    bool operator!=(const t_bint source) const {
+        return !(*this==source);
     }
 
 
