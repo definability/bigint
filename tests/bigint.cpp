@@ -1,5 +1,6 @@
 #define BOOST_TEST_MODULE BigInt class
 #include <boost/test/included/unit_test.hpp>
+//#include <boost/test/unit_test.hpp>
 #include <boost/utility/binary.hpp>
 #include "../src/bigint.cpp"
 #include "../src/exceptions.h"
@@ -488,6 +489,39 @@ BOOST_AUTO_TEST_CASE(Multiply) {
     BOOST_CHECK_EQUAL(a,0);
 }
 
+BOOST_AUTO_TEST_CASE(Multiply_advanced_test_random) {
+    BigInt a;
+    BigInt b;
+    BigInt c;
+    BigInt result;
+
+    a.generate();
+    b.generate();
+    c.generate();
+
+    result=(a+b)*c;
+
+    if (a+b<2) {
+        a++;
+        b++;
+    }
+    if (c<2) {
+        c=2;
+    }
+
+    BOOST_CHECK_EQUAL(result,c*(a+b));
+    BOOST_CHECK_EQUAL(result,c*a+c*b);
+    BOOST_CHECK_EQUAL(result,a*c+b*c);
+    BigInt oldC=c;
+    c*=a+b;
+    BOOST_REQUIRE_NE(c,oldC);
+    BOOST_CHECK_EQUAL(result,c);
+    c=oldC;
+    a*=c;
+    b=b*c;
+    BOOST_CHECK_EQUAL(result,a+b);
+}
+
 
 BOOST_AUTO_TEST_CASE(Divide) {
     BigInt a;
@@ -556,6 +590,7 @@ BOOST_AUTO_TEST_CASE(Multiply_Divide_random) {
     BOOST_CHECK_EQUAL(a%b,a-(a/b)*b);
     a.generate();
     b.generate();
+    // FIXME: Timeout error :(
     BOOST_CHECK_EQUAL(a%b,a-(a/b)*b);
     BOOST_CHECK_EQUAL(b%a,b-(b/a)*a);
 }
