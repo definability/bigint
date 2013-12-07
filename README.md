@@ -5,7 +5,7 @@ My biginteger realization with Boost library tests. Just a lab for my university
 - [x] Boolean arithmetic
 - [x] Basic arithmetic
 - [x] Class with overloaded operators
-- [|] Modular arithmetic
+- [/] Modular arithmetic
 - [\\] Boost Test Library
 
 How to make
