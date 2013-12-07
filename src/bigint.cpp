@@ -131,7 +131,7 @@ public:
         return msb(this->value, BLOCKS_NUMBER);
     }
 
-    BigInt& modPower(BigInt& p, BigInt& n) {
+    BigInt& powMod(BigInt& p, BigInt& n) {
         pow_mod(this->value, p.value, n.value);
         return (*this);
     }

@@ -33,9 +33,9 @@ int main() {
         cout<<"b="<<bi_b<<endl;
         cout<<"n="<<bi_n<<endl;
         cout<<"print '"<<bi_a<<", "<<bi_b<<", "<<bi_n<<"'"<<endl;
-        //cout<<"print 'Result is "<<bi_a.modPower(bi_b, bi_n)<<"'"<<endl;
+        //cout<<"print 'Result is "<<bi_a.powMod(bi_b, bi_n)<<"'"<<endl;
 
-        bi_a.modPower(bi_b, bi_n);
+        bi_a.powMod(bi_b, bi_n);
 
         cout<<"print 'Result is "<<bi_a<<"'"<<endl;
         cout<<"result="<<bi_a<<"==(a**b)%n"<<endl;
@@ -51,7 +51,7 @@ int main() {
         bi_b.generate();
         bi_n.generate();
         cout<<"print '"<<bi_a<<", "<<bi_b<<", "<<bi_n<<"'"<<endl;
-        cout<<"print 'Result is "<<bi_a.modPower(bi_b, bi_n)<<"'"<<endl;
+        cout<<"print 'Result is "<<bi_a.powMod(bi_b, bi_n)<<"'"<<endl;
     }
     */
     for (t_size i=0; i<100; i++) {

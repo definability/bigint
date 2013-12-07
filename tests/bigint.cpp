@@ -596,4 +596,28 @@ BOOST_AUTO_TEST_CASE(Multiply_Divide_random) {
     BOOST_CHECK_EQUAL(b%a,b-(b/a)*a);
 }
 
+BOOST_AUTO_TEST_CASE(PowerMod) {
+    BigInt x;
+    BigInt y;
+    BigInt n;
+
+    x=0;
+    y.generate();
+    n.generate();
+    x.powMod(y,n);
+    BOOST_CHECK_EQUAL(x,0);
+
+    x=1;
+    y.generate();
+    n.generate();
+    x.powMod(y,n);
+    BOOST_CHECK_EQUAL(x,1);
+
+    y=20;
+    n=17;
+    x=n-1;
+    x.powMod(y,n);
+    BOOST_CHECK_EQUAL(x,1);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
