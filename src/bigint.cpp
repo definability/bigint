@@ -34,28 +34,7 @@ int rand32() {
 
 namespace bigint {
 
-void displayBI(t_bint* a, t_size size=BLOCKS_NUMBER) {
-    cerr<<"0x"<<hex;
-    for (; a[size-1]==0; size--);
-    for (; size>0; size--)
-        cerr<<setfill('0')<<setw(2)<<(unsigned long long)a[size-1];
-}
 
-void scanBI(t_bint* a, const char* aStr, t_size sizeA=BLOCKS_NUMBER) {
-    t_size size=strlen(aStr);
-    t_size loopEnd=size-BLOCKS_NUMBER*BLOCK_SIZE;
-    loopEnd=loopEnd>0?loopEnd:0+size%ULONG_SIZE;
-    t_size i;
-    char* currentNumber=new char[ULONG_SIZE*2+1];
-    currentNumber[ULONG_SIZE*2]=0;
-    char* tmp;
-    for (i=size-ULONG_SIZE; i>=loopEnd; i-=ULONG_SIZE, (ULONG*)a++) {
-        memcpy(currentNumber, &aStr[i], ULONG_SIZE);
-        *(ULONG*)a=strtoul(currentNumber, &tmp, 16);
-    }
-    memcpy(currentNumber, &aStr[loopEnd-size%ULONG_SIZE], ULONG_SIZE);
-    *(ULONG*)a=strtoul(currentNumber, &tmp, 16);
-}
 
 void generateBI(t_bint* a, t_size sizeA=BLOCKS_NUMBER) {
     t_size i;

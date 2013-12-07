@@ -55,9 +55,12 @@ void mod(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB, t_bint* quotient, t_s
                     quotient[0]|=tmp;
                 }
 
+                // TODO: maybe modify the WHILE condition
+                // or make it FOR?
                 i--;
-                //if (i==-1) break;
-                if (cmp(divider,b,sizeD,sizeB)==CMP_EQUAL) break;
+                if (i==-1) break; 
+                assert(i>=0);
+
                 shr(divider,1,sizeD);
             }
             while (cmp(a,divider,sizeA,sizeD)&(CMP_GREATER|CMP_EQUAL)) {
