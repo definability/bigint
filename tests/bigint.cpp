@@ -132,7 +132,8 @@ BOOST_AUTO_TEST_SUITE(Binary_arithmetics)
 
 BOOST_AUTO_TEST_CASE(Negation) {
     BigInt a;
-    BigInt b=~a;
+    a.generate();
+    BigInt b(~a);
     BOOST_CHECK_NE(a,b);
     b=~b;
     BOOST_CHECK_EQUAL(a,b);
