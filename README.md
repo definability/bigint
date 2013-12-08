@@ -7,7 +7,7 @@ My biginteger realization with Boost library tests. Just a lab for my university
 - [x] Class with overloaded operators
 - [|] Modular arithmetic
 - [|] Boost Test Library
-- [ ] Euclidian algorithm
+- [ ] Euclid's algorithm
 
 How to make
 -----------
