@@ -3,6 +3,7 @@
 #include "boolean.h"
 #include "mul.h"
 #include "div.h"
+#include "modular.h"
 
 void pow_mod(t_bint* a, t_bint* b, t_bint* n, t_size sizeA, t_size sizeB, t_size sizeN) {
     if (!sizeB || sizeB>sizeA) sizeB=sizeA;
@@ -46,11 +47,9 @@ void pow_mod(t_bint* a, t_bint* b, t_bint* n, t_size sizeA, t_size sizeB, t_size
         t_bint i=0;
         while (!isNull(p,sizeP)) {
             if (p[0]&1) {
-                mul(result,tmp,sizeR,sizeT);
-                mod(result,n,sizeR,sizeN);
+                mulMod(result,tmp,n,sizeR,sizeT,sizeN);
             }
-            mul(tmp,tmp,sizeT);
-            mod(tmp,n,sizeT,sizeN);
+            sqrMod(tmp,n,sizeT,sizeN);
             if (isNull(tmp,sizeT)) {
                 break;
             }
@@ -67,4 +66,43 @@ void pow_mod(t_bint* a, t_bint* b, t_bint* n, t_size sizeA, t_size sizeB, t_size
         delete[] result;
         delete[] p;
     }
+}
+
+void mulMod(t_bint* a, t_bint *b, t_bint* n, t_size sizeA, t_size sizeB, t_size sizeN) {
+    if (!sizeB) sizeB=sizeA;
+    if (!sizeN) sizeN=sizeA;
+
+    if (isNull(a,sizeA) || cmp(a,1,sizeA)==CMP_EQUAL) {
+        return;
+    }
+    else if (cmp(a,1,sizeA)==CMP_EQUAL) {
+        mov(a,b,sizeA<sizeB?sizeA:sizeB);
+    }
+    else if (isNull(b,sizeB)) {
+        setNull(a,sizeA);
+        return;
+    }
+
+    mod(a,n,sizeA,sizeN);
+
+    if (isNull(a,sizeA)) {
+        return;
+    }
+    else {
+        t_size msbA=msb(a,sizeA);
+        t_size sizeT=(msbA+1)*2;
+        t_bint* tmp=new t_bint[sizeT];
+        setNull(tmp,sizeT);
+        mov(tmp,a,sizeA<=sizeT?sizeA:sizeT);
+        mul(tmp,b,sizeT,sizeA);
+        mod(tmp,n,sizeT,sizeN);
+        setNull(a,sizeA);
+        mov(a,tmp,msbA+1);
+        delete[] tmp;
+    }
+}
+
+void sqrMod(t_bint* a, t_bint* n, t_size sizeA, t_size sizeN) {
+    sqr(a,sizeA);
+    mod(a,n,sizeA,sizeN);
 }

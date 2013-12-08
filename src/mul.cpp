@@ -135,3 +135,7 @@ void mul(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB) {
         }
     }
 }
+
+void sqr(t_bint* a, t_size sizeA) {
+    mul(a,a,sizeA,sizeA);
+}
