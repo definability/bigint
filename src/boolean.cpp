@@ -27,7 +27,6 @@ void swr(t_bint *a, t_size shift, t_size size) {
 }
 
 void shl(t_bint* a, t_size shift, t_size size) {
-
     if (shift==0) {
     }
     else if (shift>=size*BLOCK_SIZE) {
@@ -45,19 +44,17 @@ void shl(t_bint* a, t_size shift, t_size size) {
     }
     else if (shift%BLOCK_SIZE == 0) {
         t_size i, blockShift=shift/BLOCK_SIZE;
-
-
         for (i=size-1; i>=blockShift; i--) {
             a[i]=a[i-blockShift];
         }
-        for (i=0; i<blockShift; i++)
+        for (i=0; i<blockShift; i++) {
             a[i]=0;
+        }
     }
     else {
         shl(a,shift-shift%BLOCK_SIZE,size);
         shl(a,shift%BLOCK_SIZE,size);
     }
-
 }
 
 void shr(t_bint* a, t_size shift, t_size size) {
@@ -81,8 +78,9 @@ void shr(t_bint* a, t_size shift, t_size size) {
         for (t_size i=0; i<size-blockShift; i++) {
             a[i]=a[i+blockShift];
         }
-        for (t_size i=size-blockShift; i<BLOCKS_NUMBER; i++)
+        for (t_size i=size-blockShift; i<size; i++) {
             a[i]=0;
+        }
     }
     else {
         shr(a,shift%BLOCK_SIZE);
