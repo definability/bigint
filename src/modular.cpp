@@ -17,11 +17,13 @@ void pow_mod(t_bint* a, t_bint* b, t_bint* n, t_size sizeA, t_size sizeB, t_size
         return;
     }
 
+    mod(a,n,sizeA,sizeN);
+
     t_size sizeT = sizeN*2;
-    t_size sizeR = sizeT;
+    t_size sizeR = sizeN*2;
     t_bint* tmp = new t_bint[sizeT];
     t_bint* result = new t_bint[sizeR];
-    t_size sizeP = msw(b,sizeB)+1;
+    t_size sizeP = sizeB;
     t_bint* p = new t_bint[sizeP];
 
     setNull(p,sizeP);
@@ -29,7 +31,6 @@ void pow_mod(t_bint* a, t_bint* b, t_bint* n, t_size sizeA, t_size sizeB, t_size
     setNull(result,sizeR);
 
     result[0]=1;
-    mod(a,n,sizeA,sizeN);
     mov(p,b,sizeP);
     mov(tmp,a,sizeA);
 

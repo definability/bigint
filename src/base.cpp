@@ -61,8 +61,9 @@ unsigned char cmp(t_bint* a, t_bint* b, t_size size1, t_size size2) {
                 return CMP_LOWER;
         }
     }
-    else
+    else {
         i=size1-1;
+    }
     for (; i>=0; i--) {
         if (a[i]>b[i])
             return CMP_GREATER;

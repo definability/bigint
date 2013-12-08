@@ -25,7 +25,7 @@ void mod(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB, t_bint* quotient, t_s
         n = msb(b, sizeB)+1;
         m = msb(a, sizeA)+1-n;
         if (sizeQ==0 && quotient!=NULL) sizeQ=n;
-        if (n+m<BLOCKS_NUMBER) {
+        if (n+m<=NUMBER_CAPACITY) {
             if (quotient!=NULL && sizeQ>0) quotient[0]=a[0]/b[0];
             a[0]%=b[0];
         }
@@ -72,7 +72,7 @@ void mod(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB, t_bint* quotient, t_s
         break;
     default:
         // Something's gone bad
-
+        assert(false);
         break;
     }
 }
