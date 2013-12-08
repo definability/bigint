@@ -19,20 +19,9 @@ void pow_mod(t_bint* a, t_bint* b, t_bint* n, t_size sizeA, t_size sizeB, t_size
         return;
     }
 
-    cerr<<"<--------------"<<endl;
-    cerr<<"A=";
-    displayBI(a,sizeA);
-    cerr<<endl;
     mod(a,n,sizeA,sizeN);
-    cerr<<"A=";
-    displayBI(a,sizeA);
-    cerr<<endl;
 
     if (isNull(a,sizeA)) {
-        cerr<<"NULL1"<<endl;
-        cerr<<"(";
-        displayBI(a,sizeA);
-        cerr<<")"<<endl;
         return;
     }
     else if (cmp(a,1,sizeA)==CMP_EQUAL) {
@@ -72,13 +61,7 @@ void pow_mod(t_bint* a, t_bint* b, t_bint* n, t_size sizeA, t_size sizeB, t_size
             i++;
         }
         mov(a,result,sizeA);
-        cerr<<"A=";
-        displayBI(a,sizeA);
-        cerr<<endl;
         mod(a,n,sizeA,sizeN);
-        cerr<<"A=";
-        displayBI(a,sizeA);
-        cerr<<endl;
 
         delete[] tmp;
         delete[] result;
