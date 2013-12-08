@@ -16,8 +16,17 @@ void LOG(string message, unsigned char ll) {
 void displayBI(t_bint* a, t_size size) {
     cerr<<"0x"<<hex;
     for (; a[size-1]==0; size--);
-    for (; size>0; size--)
-        cerr<<setfill('0')<<setw(2)<<(unsigned long long)a[size-1];
+    if (size==0) {
+        cerr<<"0";
+        return;
+    }
+    else {
+        cerr<<(unsigned long long)a[size-1];
+        for (; size>0; size--) {
+            cerr<<setfill('0')<<setw(BLOCK_SIZE/4)
+                <<(unsigned long long)a[size-1];
+        }
+    }
 }
 
 void scanBI(t_bint* a, const char* aStr, t_size sizeA) {
@@ -103,11 +112,13 @@ t_size msb(t_bint* a, t_size size) {
 }
 
 bool isNull(t_bint* a, t_size size) {
-    if (!a || !size)
+    if (!a || !size) {
         return true;
+    }
     while (size-->0) {
-        if (a[size])
+        if (a[size]) {
             return false;
+        }
     }
     return true;
 }

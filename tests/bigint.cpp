@@ -665,17 +665,17 @@ BOOST_AUTO_TEST_CASE(PowerMod) {
     x.powMod(y,n);
     BOOST_CHECK_EQUAL(x,0);
 
-    x.generate();
     n=17;
-    y=16;
-    if (x%n==0) {
-        x++;
-    }
-    if (x==0) {
-        x=n-1;
-    }
+    y=n-1;
+    x=n+1;
     x.powMod(y,n);
     BOOST_CHECK_EQUAL(x,1);
+}
+
+BOOST_AUTO_TEST_CASE(PowerMod_primes) {
+    BigInt x;
+    BigInt y;
+    BigInt n;
 
     n=1;
     n<<=7;
@@ -688,31 +688,26 @@ BOOST_AUTO_TEST_CASE(PowerMod) {
     if (x==0) {
         x=n-1;
     }
+    BOOST_CHECK_NE(x%n,0);
     x.powMod(y,n);
     BOOST_CHECK_EQUAL(x,1);
 
     n=1;
     t_bint prime=1;
-    // FIXME: Why NUMBER_CAPACITY-63 ?
-    t_bint max_needed_prime = NUMBER_CAPACITY-63;
+    t_bint max_needed_prime = NUMBER_CAPACITY;
     if (NUMBER_CAPACITY<=64) {
         max_needed_prime=NUMBER_CAPACITY;
     }
     for (t_size i=0; PRIMES[i]<=MAX_PRIME && PRIMES[i]<max_needed_prime; i++) {
         prime=PRIMES[i];
     }
-    //prime=193;
-    cerr<<"PRIME="<<prime<<endl;
     n<<=prime;
     n--;
     y=n-1;
     x=n+1;
-    cerr<<x<<endl;
-    cerr<<y<<endl;
-    cerr<<n<<endl;
+    BOOST_CHECK_NE(x%n,0);
     x.powMod(y,n);
     BOOST_CHECK_EQUAL(x,1);
-
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -25,17 +25,15 @@ void mod(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB, t_bint* quotient, t_s
         n = msb(b, sizeB)+1;
         m = msb(a, sizeA)+1-n;
         if (sizeQ==0 && quotient!=NULL) sizeQ=n;
-        if (n+m<=NUMBER_CAPACITY) {
+        if (n+m<=BLOCK_SIZE) {
             if (quotient!=NULL && sizeQ>0) quotient[0]=a[0]/b[0];
             a[0]%=b[0];
         }
         else {
-
             t_size mswA = msw(a, sizeA);
             t_size mswB = msw(b, sizeB);
-            t_size sizeD = mswA+2;
+            t_size sizeD = mswA+1;
             t_bint* divider = new t_bint[sizeD];
-            //t_bint* dt = new t_bint[sizeD];
             setNull(divider,sizeD);
             mov(divider,b,sizeD);
 
