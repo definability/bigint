@@ -312,26 +312,63 @@ BOOST_AUTO_TEST_CASE(SHL_random) {
 }
 
 BOOST_AUTO_TEST_CASE(SHL_SHR_random) {
-    const t_size TEST_SHIFT=NUMBER_CAPACITY/2;
+    t_size TEST_SHIFT=NUMBER_CAPACITY/2;
     BigInt a;
     BigInt b;
     BigInt c;
     a.generate();
 
-    // For test correctness
+    // Set bits on bounds for test correctness
     b=1;
     b<<=NUMBER_CAPACITY-1;
     b|=1;
     a|=b;
 
+    b=a<<(NUMBER_CAPACITY-TEST_SHIFT);
+    b>>=(NUMBER_CAPACITY-TEST_SHIFT);
+
     c=a;
     BOOST_CHECK_EQUAL(c,a);
-    b=a<<TEST_SHIFT;
-    b=b>>(NUMBER_CAPACITY-TEST_SHIFT);
+    BOOST_CHECK_EQUAL(b,(c<<(NUMBER_CAPACITY-TEST_SHIFT))>>(NUMBER_CAPACITY-TEST_SHIFT));
+    BOOST_CHECK_EQUAL(b>>(NUMBER_CAPACITY-TEST_SHIFT),0);
     a>>=TEST_SHIFT;
     a=a<<TEST_SHIFT;
+    BOOST_CHECK_EQUAL(a,(c>>TEST_SHIFT)<<TEST_SHIFT);
+    BOOST_CHECK_EQUAL(a<<TEST_SHIFT,0);
     BOOST_CHECK_NE(c,a);
     BOOST_CHECK_NE(c,b);
+    BOOST_CHECK_EQUAL(c,a|b);
+    BOOST_CHECK_EQUAL(c-(a|b),0);
+
+    TEST_SHIFT=NUMBER_CAPACITY/2+1;
+    a.generate();
+    c=a;
+    a=(c>>TEST_SHIFT)<<TEST_SHIFT;
+    b=c<<(NUMBER_CAPACITY-TEST_SHIFT);
+    b>>=(NUMBER_CAPACITY-TEST_SHIFT);
+    BOOST_CHECK_EQUAL(c,a|b);
+    cerr<<endl;
+
+    TEST_SHIFT=0;
+    a.generate();
+    c=a;
+    a=(c>>TEST_SHIFT)<<TEST_SHIFT;
+    b=(c<<(NUMBER_CAPACITY-TEST_SHIFT))>>(NUMBER_CAPACITY-TEST_SHIFT);
+    BOOST_CHECK_EQUAL(c,a|b);
+
+    TEST_SHIFT=NUMBER_CAPACITY;
+    a.generate();
+    c=a;
+    a=(c>>TEST_SHIFT)<<TEST_SHIFT;
+    b=(c<<(NUMBER_CAPACITY-TEST_SHIFT))>>(NUMBER_CAPACITY-TEST_SHIFT);
+    BOOST_CHECK_EQUAL(c,a|b);
+
+
+    TEST_SHIFT=rand()%NUMBER_CAPACITY;
+    a.generate();
+    c=a;
+    a=(c>>TEST_SHIFT)<<TEST_SHIFT;
+    b=(c<<(NUMBER_CAPACITY-TEST_SHIFT))>>(NUMBER_CAPACITY-TEST_SHIFT);
     BOOST_CHECK_EQUAL(c,a|b);
 }
 
@@ -571,6 +608,7 @@ BOOST_AUTO_TEST_CASE(Multiply_Divide_random) {
     BOOST_CHECK_EQUAL(a*2,a<<1);
     BOOST_CHECK_EQUAL(a*8,a<<3);
     BOOST_CHECK_EQUAL(a/2,a>>1);
+    BOOST_CHECK_EQUAL(a%1,0);
     BOOST_CHECK_EQUAL(a/8,a>>3);
     BigInt b;
     BigInt c;
@@ -591,7 +629,6 @@ BOOST_AUTO_TEST_CASE(Multiply_Divide_random) {
     BOOST_CHECK_EQUAL(a%b,a-(a/b)*b);
     a.generate();
     b.generate();
-    // FIXME: Timeout error :(
     BOOST_CHECK_EQUAL(a%b,a-(a/b)*b);
     BOOST_CHECK_EQUAL(b%a,b-(b/a)*a);
 }
@@ -613,9 +650,43 @@ BOOST_AUTO_TEST_CASE(PowerMod) {
     x.powMod(y,n);
     BOOST_CHECK_EQUAL(x,1);
 
-    y=20;
+    x.generate();
+    y.generate();
+    n=1;
+    x.powMod(y,n);
+    BOOST_CHECK_EQUAL(x,0);
+
+    x.generate();
     n=17;
-    x=n-1;
+    y=16;
+    if (x%n==0) {
+        x++;
+    }
+    if (x==0) {
+        x=n-1;
+    }
+    x.powMod(y,n);
+    BOOST_CHECK_EQUAL(x,1);
+
+    n=1;
+    n<<=127;
+    n--;
+    y=n-1;
+    x.generate();
+    if (x%n==0) {
+        x++;
+    }
+    if (x==0) {
+        x=n-1;
+    }
+    x.powMod(y,n);
+    BOOST_CHECK_EQUAL(x,1);
+
+    n=1;
+    n<<=997;
+    n--;
+    y=n-1;
+    x=n+1;
     x.powMod(y,n);
     BOOST_CHECK_EQUAL(x,1);
 }
