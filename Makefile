@@ -10,6 +10,7 @@ SRCDIR=src
 OBJDIR=obj
 BINDIR=bin
 TSTDIR=tests
+TSBDIR=tests/bin
 SOURCE_FILES=base.cpp boolean.cpp arithmetics.cpp mul.cpp div.cpp modular.cpp
 SOURCES=$(SOURCE_FILES:%=$(SRCDIR)/%)
 OBJECTS=$(SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
@@ -30,6 +31,7 @@ all: $(OBJECTS)
 clean:
 	rm -rf $(BINDIR)
 	rm -rf $(OBJDIR)
+	rm -rf $(TSBDIR)
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cpp
 	mkdir -p $(OBJDIR)
@@ -58,10 +60,12 @@ test_config_errors: $(OBJECTS) $(TSTDIR)/config.cpp
 $(TSTDIR)/bigint.cpp: $(SRCDIR)/bigint.cpp
 
 test_bigint: $(OBJECTS)
-	$(COMPILATION_PREFIX) $(TSTDIR)/bigint.cpp -o $(TSTDIR)/bigint $(TEST_COMPILATION_SUFFIX)
-	$(TSTDIR)/bigint $(TESTS_PARAMETERS)
+	mkdir -p $(TSBDIR)
+	$(COMPILATION_PREFIX) $(TSTDIR)/bigint.cpp -o $(TSBDIR)/bigint $(TEST_COMPILATION_SUFFIX)
+	$(TSBDIR)/bigint $(TESTS_PARAMETERS)
 
 
 test_bigint_errors: $(OBJECTS)
-	$(COMPILATION_PREFIX) $(TSTDIR)/bigint.cpp -o $(TSTDIR)/bigint $(TEST_COMPILATION_SUFFIX)
-	$(TSTDIR)/bigint --log_level=error
+	mkdir -p $(TSBDIR)
+	$(COMPILATION_PREFIX) $(TSTDIR)/bigint.cpp -o $(TSBDIR)/bigint $(TEST_COMPILATION_SUFFIX)
+	$(TSBDIR)/bigint --log_level=error
