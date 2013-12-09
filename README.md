@@ -52,3 +52,17 @@ To see only errors (or nothing if there are no errors) type
 ```bash
 make test_testname_errors
 ```
+###Time tests
+You can use ```time``` for the time measurement
+```bash
+time ./tests/bin/time_generate 1 1000
+```
+Usage of ```time_generate```:
+- First argument is the test number (if you execute ```time_generate``` without parameters, you can see the tests
+- Second argument is the number of BigIntegers to generate and operate
+###Memory leaks testing
+Use valgrind. For example:
+```bash
+valgrind --tool=memcheck --leak-check=full ./tests/bin/time_generate 5 1 2>err.log
+```
+Flag ```-g``` in ```g++``` allows you to see the line of code in which the memory leak could me fixed.
