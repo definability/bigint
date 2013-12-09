@@ -14,7 +14,7 @@ typedef long double t_float;
 
 //TODO: bits->bytes sizes
 const t_size BLOCK_SIZE = 8 * sizeof(t_bint); //64;
-const t_size NUMBER_CAPACITY = (long)1 << 9;
+const t_size NUMBER_CAPACITY = (long)1 << 11;
 const t_size BLOCKS_NUMBER = NUMBER_CAPACITY / BLOCK_SIZE;
 const t_size ULONG_SIZE = sizeof(ULONG);
 

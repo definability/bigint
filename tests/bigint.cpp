@@ -429,6 +429,15 @@ BOOST_AUTO_TEST_CASE(Increment_Decrement_random) {
     BOOST_CHECK_EQUAL(bi,0);
     bi--;
     BOOST_CHECK_EQUAL(bi,bi.MAX_VALUE());
+
+    // Will not work on 15-bit machines and less
+    bi=0;
+    t_size n = 200+rand()%(0xFFFF-200); 
+    t_size i = n;
+    while (i-->0) {
+        bi++;
+    }
+    BOOST_CHECK_EQUAL(bi,n);
 }
 
 BOOST_AUTO_TEST_CASE(Plus) {
@@ -572,6 +581,17 @@ BOOST_AUTO_TEST_CASE(Multiply_advanced_test_random) {
     a *= c;
     b = b * c;
     BOOST_CHECK_EQUAL(result,a + b);
+
+    // Will not work on 15-bit machines and less
+    a.generate();
+    b = a;
+    t_size n = 200+rand()%(0xFFFF-200); 
+    t_size i = n;
+    while (i-->0) {
+        a += b;
+    }
+    a = a - b;
+    BOOST_CHECK_EQUAL(a,b*(t_bint)n);
 }
 
 BOOST_AUTO_TEST_CASE(Divide) {
@@ -707,7 +727,12 @@ BOOST_AUTO_TEST_CASE(PowerMod_primes) {
 
     n = 17;
     y = n - 1;
-    x = n + 1;
+    x.generate();
+    if (x % n == 0 || n % x == 0) {
+        x++;
+    }
+    BOOST_CHECK_NE(x % n,0);
+    BOOST_CHECK_NE(n % x,0);
     x.powMod(y,n);
     BOOST_CHECK_EQUAL(x,1);
 
@@ -715,26 +740,30 @@ BOOST_AUTO_TEST_CASE(PowerMod_primes) {
     n <<= 7;
     n--;
     y = n - 1;
-    x = n + 1;
+    x.generate();
+    if (x % n == 0 || n % x == 0) {
+        x++;
+    }
     BOOST_CHECK_NE(x % n,0);
+    BOOST_CHECK_NE(n % x,0);
     x.powMod(y,n);
     BOOST_CHECK_EQUAL(x,1);
 
     n = 1;
     t_bint prime = 1;
-    t_bint max_needed_prime = NUMBER_CAPACITY;
-    if (NUMBER_CAPACITY <= 64) {
-        max_needed_prime = NUMBER_CAPACITY;
-    }
     for (t_size i = 0;
-         PRIMES[i] <= MAX_PRIME && PRIMES[i] < max_needed_prime; i++) {
+         PRIMES[i] <= MAX_PRIME && PRIMES[i] < NUMBER_CAPACITY; i++) {
         prime = PRIMES[i];
     }
     n <<= prime;
     n--;
     y = n - 1;
-    x = n + 1;
+    x.generate();
+    if (x % n == 0 || n % x == 0) {
+        x++;
+    }
     BOOST_CHECK_NE(x % n,0);
+    BOOST_CHECK_NE(n % x,0);
     x.powMod(y,n);
     BOOST_CHECK_EQUAL(x,1);
 }
