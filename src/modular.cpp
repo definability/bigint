@@ -16,6 +16,7 @@ void pow_mod(t_bint* a, t_bint* b, t_bint* n, t_size sizeA, t_size sizeB, t_size
         return;
     }
     if (isNull(b,sizeB)) {
+        // TODO: maybe add setNull(a,sizeA) ?
         a[0]=1;
         return;
     }
