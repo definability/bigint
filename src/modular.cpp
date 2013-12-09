@@ -25,7 +25,7 @@ void pow_mod(t_bint* a,
 		return;
 	}
 	if (isNull(b,sizeB)) {
-		// TODO: maybe add setNull(a,sizeA) ?
+		setNull(a,sizeA);
 		a[0] = 1;
 		return;
 	}

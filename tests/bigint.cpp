@@ -667,16 +667,16 @@ BOOST_AUTO_TEST_CASE(PowerMod) {
 	BOOST_CHECK_EQUAL(x,1);
 
 	x.generate();
+	y = 0;
+	n.generate();
+	x.powMod(y,n);
+	BOOST_CHECK_EQUAL(x,1);
+
+	x.generate();
 	y.generate();
 	n = 1;
 	x.powMod(y,n);
 	BOOST_CHECK_EQUAL(x,0);
-
-	n = 17;
-	y = n - 1;
-	x = n + 1;
-	x.powMod(y,n);
-	BOOST_CHECK_EQUAL(x,1);
 }
 
 BOOST_AUTO_TEST_CASE(PowerMod_primes) {
@@ -684,17 +684,17 @@ BOOST_AUTO_TEST_CASE(PowerMod_primes) {
 	BigInt y;
 	BigInt n;
 
+	n = 17;
+	y = n - 1;
+	x = n + 1;
+	x.powMod(y,n);
+	BOOST_CHECK_EQUAL(x,1);
+
 	n = 1;
 	n <<= 7;
 	n--;
 	y = n - 1;
-	x.generate();
-	if (x % n == 0) {
-		x++;
-	}
-	if (x == 0) {
-		x = n - 1;
-	}
+    x = n + 1;
 	BOOST_CHECK_NE(x % n,0);
 	x.powMod(y,n);
 	BOOST_CHECK_EQUAL(x,1);
