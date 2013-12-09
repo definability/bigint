@@ -1,7 +1,7 @@
 ARCH:=$(shell getconf LONG_BIT)
 
 CC=g++
-CPPFLAGS_=-mtune=native# -Wall
+CPPFLAGS_=-mtune=native -Wall# -O3
 CPPFLAGS_64=-m64
 CPPFLAGS_32=-m32
 CPPFLAGS=$(CPPFLAGS_) $(CPPFLAGS_$(ARCH))
