@@ -3,7 +3,7 @@
 #include "arithmetics.h"
 
 unsigned char getCarry(t_bint a, t_bint b, t_bint result) {
-    return( ( (a & b) | ((b | a) & (~result)) ) >> (BLOCK_SIZE - 1));
+    return ( (a & b) | ((b | a) & (~result)) ) >> (BLOCK_SIZE - 1);
 }
 
 void add(t_bint* a, t_bint* b, t_size size1, t_size size2) {

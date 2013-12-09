@@ -342,7 +342,7 @@ BOOST_AUTO_TEST_CASE(SHL_SHR_random) {
     BOOST_CHECK_EQUAL(b,
                       (c <<
                        (NUMBER_CAPACITY -
-                            TEST_SHIFT)) >> (NUMBER_CAPACITY - TEST_SHIFT));
+                        TEST_SHIFT)) >> (NUMBER_CAPACITY - TEST_SHIFT));
     BOOST_CHECK_EQUAL(b >> (NUMBER_CAPACITY - TEST_SHIFT),0);
     a >>= TEST_SHIFT;
     a = a << TEST_SHIFT;
@@ -431,10 +431,10 @@ BOOST_AUTO_TEST_CASE(Increment_Decrement_random) {
     BOOST_CHECK_EQUAL(bi,bi.MAX_VALUE());
 
     // Will not work on 15-bit machines and less
-    bi=0;
-    t_size n = 200+rand()%(0xFFFF-200); 
+    bi = 0;
+    t_size n = 200 + rand() % (0xFFFF - 200);
     t_size i = n;
-    while (i-->0) {
+    while (i-- > 0) {
         bi++;
     }
     BOOST_CHECK_EQUAL(bi,n);
@@ -585,13 +585,13 @@ BOOST_AUTO_TEST_CASE(Multiply_advanced_test_random) {
     // Will not work on 15-bit machines and less
     a.generate();
     b = a;
-    t_size n = 200+rand()%(0xFFFF-200); 
+    t_size n = 200 + rand() % (0xFFFF - 200);
     t_size i = n;
-    while (i-->0) {
+    while (i-- > 0) {
         a += b;
     }
     a = a - b;
-    BOOST_CHECK_EQUAL(a,b*(t_bint)n);
+    BOOST_CHECK_EQUAL(a,b * (t_bint)n);
 }
 
 BOOST_AUTO_TEST_CASE(Divide) {
