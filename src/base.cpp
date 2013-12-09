@@ -46,6 +46,8 @@ void scanBI(t_bint* a, const char* aStr, t_size sizeA) {
     }
     memcpy(currentNumber, &aStr[loopEnd - size % ULONG_SIZE], ULONG_SIZE);
     *(ULONG*)a = strtoul(currentNumber, &tmp, 16);
+    delete[] currentNumber;
+    delete[] tmp;
 }
 
 unsigned char cmp(t_bint* a, t_bint b, t_size size) {

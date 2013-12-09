@@ -152,6 +152,13 @@ void mul(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB) {
             setNull(a,sizeA);
             mov(a,result,sizeR < sizeA ? sizeR : sizeA);
             delete[] tmp;
+            delete[] x[0];
+            delete[] x[1];
+            delete[] x;
+            delete[] y[0];
+            delete[] y[1];
+            delete[] y;
+            delete[] result;
         }
     }
 }

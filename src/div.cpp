@@ -102,4 +102,5 @@ void div(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB) {
     mod(a,b,sizeA,sizeB,quotient,sizeQ);
     setNull(a,sizeA);
     mov(a,quotient,sizeQ);
+    delete[] quotient;
 }

@@ -1,7 +1,7 @@
 ARCH:=$(shell getconf LONG_BIT)
 
 CC=g++
-CPPFLAGS_=-mtune=native -Wall# -O3
+CPPFLAGS_=-mtune=native -Wall -g# -O3
 CPPFLAGS_64=-m64
 CPPFLAGS_32=-m32
 CPPFLAGS=$(CPPFLAGS_) $(CPPFLAGS_$(ARCH))
@@ -69,3 +69,9 @@ test_bigint_errors: $(OBJECTS)
 	mkdir -p $(TSBDIR)
 	$(COMPILATION_PREFIX) $(TSTDIR)/bigint.cpp -o $(TSBDIR)/bigint $(TEST_COMPILATION_SUFFIX)
 	$(TSBDIR)/bigint --log_level=error
+
+
+test_time_generate: $(OBJECTS) 
+	mkdir -p $(TSBDIR)
+	$(COMPILATION_PREFIX) $(TSTDIR)/time_generate.cpp -o $(TSBDIR)/time_generate $(TEST_COMPILATION_SUFFIX)
+	$(TSBDIR)/time_generate
