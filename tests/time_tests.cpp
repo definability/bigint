@@ -45,3 +45,11 @@ int div(int n) {
     delete[] bigInts;
     return 0;
 }
+int pow(int n) {
+    BigInt* bigInts = generate(n + 2);
+    for (t_size i = 0; i < n; i++) {
+        bigInts[i].powMod(bigInts[i + 1],bigInts[i + 1]);
+    }
+    delete[] bigInts;
+    return 0;
+}

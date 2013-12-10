@@ -11,9 +11,9 @@ typedef int (*tt1f)(int); // Time test (tt) functions (f) with 1 argument
 
 string tests[] =
 { "Generation of random numbers", "Addition", "Subtraction", "Multiplication",
-  "Division" };
-tt1f funcs[] = { gen, add, sub, mul, div };
-const t_size TESTS_NUMBER = 5;
+  "Division", "Power" };
+tt1f funcs[] = { gen, add, sub, mul, div, pow };
+const t_size TESTS_NUMBER = 6;
 
 int main(int argc, char* argv[]) {
     t_size n;
