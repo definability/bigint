@@ -96,7 +96,7 @@ void mulMod(t_bint* a,
         sizeN = sizeA;
     }
 
-    if (isNull(a,sizeA) || cmp(a,1,sizeA) == CMP_EQUAL) {
+    if (isNull(a,sizeA)) {
         return;
     }
     else if (cmp(a,1,sizeA) == CMP_EQUAL) {
@@ -117,11 +117,11 @@ void mulMod(t_bint* a,
         t_size sizeT = (msbA + 1) * 2;
         t_bint* tmp = new t_bint[sizeT];
         setNull(tmp,sizeT);
-        mov(tmp,a,sizeA <= sizeT ? sizeA : sizeT);
-        mul(tmp,b,sizeT,sizeA);
+        mov(tmp,a,sizeA < sizeT ? sizeA : sizeT);
+        mul(tmp,b,sizeT,sizeB);
         mod(tmp,n,sizeT,sizeN);
         setNull(a,sizeA);
-        mov(a,tmp,msbA + 1);
+        mov(a,tmp,sizeA < sizeT ? sizeA : sizeT);
         delete[] tmp;
     }
 }

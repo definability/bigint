@@ -48,7 +48,10 @@ int div(int n) {
 int pow(int n) {
     BigInt* bigInts = generate(n + 2);
     for (t_size i = 0; i < n; i++) {
-        bigInts[i].powMod(bigInts[i + 1],bigInts[i + 1]);
+        cerr<<"Iteration "<<i<<":"<<endl;
+        cerr<<bigInts[i]<<endl<<bigInts[i + 1]<<endl<<bigInts[i + 2]<<endl;
+        bigInts[i].powMod(bigInts[i + 1],bigInts[i + 2]);
+        cerr<<"Result: "<<bigInts[i]<<endl;
     }
     delete[] bigInts;
     return 0;
