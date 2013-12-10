@@ -51,7 +51,7 @@ void mod(t_bint* a,
             t_size sizeD = mswA + 1;
             t_bint* divider = new t_bint[sizeD];
             setNull(divider,sizeD);
-            mov(divider,b,msw(b,sizeB)+1);
+            mov(divider,b,msw(b,sizeB) + 1);
 
             shl(divider,m,sizeD);
 
@@ -73,7 +73,7 @@ void mod(t_bint* a,
                 // or make it FOR?
                 i--;
                 if (i == -1) {
-                    assert(cmp(divider,b,sizeD,sizeB)==CMP_EQUAL);
+                    assert(cmp(divider,b,sizeD,sizeB) == CMP_EQUAL);
                     break;
                 }
                 assert(i >= 0);
@@ -86,7 +86,7 @@ void mod(t_bint* a,
                        sizeD) & (CMP_GREATER | CMP_EQUAL)) {
                 // TODO: create DECREMENT function
                 sub(a,divider,sizeA,sizeD);
-                if (quotient!= NULL && sizeQ > 0) {
+                if (quotient != NULL && sizeQ > 0) {
                     add(quotient,one,sizeQ,1);
                 }
             }
