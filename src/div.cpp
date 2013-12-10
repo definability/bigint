@@ -87,7 +87,7 @@ void mod(t_bint* a,
                 // TODO: create DECREMENT function
                 sub(a,divider,sizeA,sizeD);
                 if (quotient!= NULL && sizeQ > 0) {
-                    add(quotient,one,sizeA,1);
+                    add(quotient,one,sizeQ,1);
                 }
             }
             delete[] one;
