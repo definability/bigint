@@ -24,6 +24,7 @@ void displayBI(t_bint* a, t_size size) {
     }
     else {
         cerr << (unsigned long long)a[size - 1];
+        size--;
         for (; size > 0; size--) {
             cerr << setfill('0') << setw(BLOCK_SIZE / 4)
                  << (unsigned long long)a[size - 1];
@@ -137,7 +138,10 @@ t_size msb(t_bint* a, t_size size) {
 }
 
 bool isNull(t_bint* a, t_size size) {
-    if (!a || !size) {
+    if (size < 1) {
+        return true;
+    }
+    if (a == NULL) {
         return true;
     }
     while (size-- > 0) {
@@ -145,11 +149,11 @@ bool isNull(t_bint* a, t_size size) {
             return false;
         }
     }
-
     return true;
 }
 
 void setNull(t_bint* a, t_size size) {
+    // memset(a,0,size * sizeof(t_bint));
     while (size-- > 0) {
         a[size] = 0;
     }

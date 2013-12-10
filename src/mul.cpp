@@ -44,8 +44,8 @@ void mul(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB) {
                    sizeY0 =
                 n<mswB ? n : mswB,
                   sizeY1 = mswB>sizeY0 ? mswB - sizeY0 : 0;
-            t_bint** x = new t_bint *[1 + (bool)sizeX1],
-            ** y = new t_bint *[1 + (bool)sizeY1],
+            t_bint** x = new t_bint *[2],
+            ** y = new t_bint *[2],
             * tmp = new t_bint[sizeR],
             * result = new t_bint[sizeR];
             //n*=BLOCK_SIZE;
@@ -60,6 +60,9 @@ void mul(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB) {
                     x[1][i] = a[i + sizeX0];
                 }
             }
+            else {
+                x[1] = new t_bint[sizeX1];
+            }
             // Initialize Y0, Y1
             y[0] = new t_bint[sizeY0];
             for (i = 0; i < sizeY0; i++) {
@@ -70,6 +73,9 @@ void mul(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB) {
                 for (i = 0; i < sizeY1; i++) {
                     y[1][i] = b[i + sizeY0];
                 }
+            }
+            else {
+                y[1] = new t_bint[sizeY1];
             }
 
             // Formula: X1*Y1*(2^2n+2^n)+(X1-X0)(Y0-Y1)*b^n+X0*Y0*(b^n+1)

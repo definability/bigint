@@ -765,7 +765,7 @@ BOOST_AUTO_TEST_CASE(PowerMod_primes) {
     BOOST_CHECK_NE(x % n,0);
     BOOST_CHECK_NE(n % x,0);
     x.powMod(y,n);
-    BOOST_CHECK_EQUAL(x,1);
+    BOOST_CHECK_MESSAGE(x==1,"Provide new test here!");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
