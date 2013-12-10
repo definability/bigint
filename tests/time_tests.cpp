@@ -8,8 +8,8 @@ BigInt* generate(int n) {
     return bigInts;
 }
 int gen(int n) {
-    //BigInt* bigInts = generate(n);
-    //delete[] bigInts;
+    BigInt* bigInts = generate(n);
+    delete[] bigInts;
     return 0;
 }
 int add(int n) {
