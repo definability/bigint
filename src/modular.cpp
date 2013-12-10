@@ -12,6 +12,7 @@ void pow_mod(t_bint* a,
              t_size sizeA,
              t_size sizeB,
              t_size sizeN) {
+    // TODO: check these size checks
     if (!sizeB || sizeB > sizeA) {
         sizeB = sizeA;
     }
@@ -124,6 +125,18 @@ void mulMod(t_bint* a,
         mov(a,tmp,sizeA < sizeT ? sizeA : sizeT);
         delete[] tmp;
     }
+    // TODO: maybe provide following code?
+    /*
+    t_size sizeT = sizeA+sizeB+1;
+    t_bint* tmp = new t_bint[sizeT];
+    setNull(tmp,sizeT);
+    mov(tmp,a,sizeA);
+    mul(tmp,b,sizeT,sizeB);
+    mod(tmp,n,sizeT,sizeN);
+    setNull(a,sizeA);
+    mov(a,tmp,sizeA);
+    delete[] tmp;
+    */
 }
 
 void sqrMod(t_bint* a, t_bint* n, t_size sizeA, t_size sizeN) {
