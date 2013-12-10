@@ -71,7 +71,6 @@ test_bigint_errors: $(OBJECTS)
 	$(TSBDIR)/bigint --log_level=error
 
 
-test_time_generate: $(OBJECTS) 
+test_time: $(OBJECTS) 
 	mkdir -p $(TSBDIR)
-	$(COMPILATION_PREFIX) $(TSTDIR)/time_generate.cpp -o $(TSBDIR)/time_generate $(TEST_COMPILATION_SUFFIX)
-	$(TSBDIR)/time_generate
+	$(COMPILATION_PREFIX) $(TSTDIR)/time.cpp -o $(TSBDIR)/time $(TEST_COMPILATION_SUFFIX)

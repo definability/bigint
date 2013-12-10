@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include <string>
 #include "../src/bigint.cpp"
-#include "time_generate.h"
+#include "time.h"
 #include "time_tests.cpp"
 
 using namespace std;
