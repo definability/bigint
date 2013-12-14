@@ -105,9 +105,7 @@ unsigned char cmp(t_bint* a, t_bint* b, t_size size1, t_size size2) {
 }
 
 void mov(t_bint* a, t_bint* b, t_size size) {
-    for (t_size i = 0; i < size; i++) {
-        a[i] = b[i];
-    }
+    memcpy(a,b,size*sizeof(t_size));
 }
 
 t_size msw(t_bint* a, t_size size) {
@@ -153,8 +151,5 @@ bool isNull(t_bint* a, t_size size) {
 }
 
 void setNull(t_bint* a, t_size size) {
-    // memset(a,0,size * sizeof(t_bint));
-    while (size-- > 0) {
-        a[size] = 0;
-    }
+    memset(a,0,size * sizeof(t_bint));
 }
