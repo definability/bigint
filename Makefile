@@ -17,14 +17,17 @@ OBJECTS=$(SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 COMPILATION_PREFIX=$(CC) $(CPPFLAGS) $(OBJECTS)
 TEST_COMPILATION_SUFFIX=-lboost_system -lboost_thread -lboost_unit_test_framework
 MAIN_SRC=$(SRCDIR)/main.cpp
-MAIN_OBJ=$(MAIN_SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
-TESTS=config bigint
+MAIN_OBJ=$(MAIN_SRC:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
+TESTS=config bigint modular time
+TEST_SOURCES=$(TESTS:%=$(TSTDIR)/%.cpp)
+TEST_OBJECTS=$(TESTS:%=$(OBJDIR)/test_%.o)
+TEST_EXECUTABLES=$(TESTS:%=$(TSBDIR)/%)
+TEST_RUNNERS=$(TESTS:%=test_%)
+TEST_RUNNERS_DETAILED=$(TESTS:%=test_%_detailed)
+TEST_RUNNERS_ERRORS=$(TESTS:%=test_%_errors)
 TESTS_PARAMETERS=--log_level=all
 
-objects:
-	@echo $(OBJECTS)
-
-all: $(OBJECTS)
+all: $(OBJECTS) $(MAIN_OBJ)
 	mkdir -p $(BINDIR)
 	$(COMPILATION_PREFIX) $(MAIN_OBJ) -o $(BINDIR)/bigint
 
@@ -38,39 +41,32 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cpp
 	$(CC) $(CPPFLAGS) -c $< -o $@
 
 $(MAIN_SRC): $(SRCDIR)/bigint.cpp
+$(MAIN_OBJ): $(SRCDIR)/main.cpp
+	mkdir -p $(OBJDIR)
+	$(CC) $(CPPFLAGS) -c $(MAIN_SRC) -o $(MAIN_OBJ)
 
 arch:
 	@echo $(ARCH)
-flags:
-	@echo $(CPPFLAGS)
-
 
 available_tests:
 	@echo $(TESTS)
 
-test_config: $(OBJECTS) $(TSTDIR)/config.cpp
-	$(COMPILATION_PREFIX) $(TSTDIR)/config.cpp -o $(TSTDIR)/config $(TEST_COMPILATION_SUFFIX)
-	$(TSTDIR)/config $(TESTS_PARAMETERS)
-
-test_config_errors: $(OBJECTS) $(TSTDIR)/config.cpp
-	$(COMPILATION_PREFIX) $(TSTDIR)/config.cpp -o $(TSTDIR)/config $(TEST_COMPILATION_SUFFIX)
-	$(TSTDIR)/config --log_level=error
-
-
 $(TSTDIR)/bigint.cpp: $(SRCDIR)/bigint.cpp
+$(TSTDIR)/modular.cpp: $(SRCDIR)/bigint.cpp
+$(TSTDIR)/config.cpp: $(SRCDIR)/config.h
 
-test_bigint: $(OBJECTS)
+$(TEST_OBJECTS): $(OBJDIR)/test_%.o : $(TSTDIR)/%.cpp
+	$(CC) $(CPPFLAGS) -c $< -o $@ $(TEST_COMPILATION_SUFFIX)
+
+$(TEST_EXECUTABLES): $(TSBDIR)/% : $(OBJDIR)/test_%.o
 	mkdir -p $(TSBDIR)
-	$(COMPILATION_PREFIX) $(TSTDIR)/bigint.cpp -o $(TSBDIR)/bigint $(TEST_COMPILATION_SUFFIX)
-	$(TSBDIR)/bigint $(TESTS_PARAMETERS)
+	$(COMPILATION_PREFIX) $< -o $@ $(TEST_COMPILATION_SUFFIX)
 
+$(TEST_RUNNERS): test_%: $(TSBDIR)/%
+	$<
 
-test_bigint_errors: $(OBJECTS)
-	mkdir -p $(TSBDIR)
-	$(COMPILATION_PREFIX) $(TSTDIR)/bigint.cpp -o $(TSBDIR)/bigint $(TEST_COMPILATION_SUFFIX)
-	$(TSBDIR)/bigint --log_level=error
+$(TEST_RUNNERS_ERRORS): test_%: $(TSBDIR)/%
+	$< --log_level=error
 
-
-test_time: $(OBJECTS) 
-	mkdir -p $(TSBDIR)
-	$(COMPILATION_PREFIX) $(TSTDIR)/time.cpp -o $(TSBDIR)/time $(TEST_COMPILATION_SUFFIX)
+$(TEST_RUNNERS_DETAILED): test_%: $(TSBDIR)/%
+	$< --log_level=all
