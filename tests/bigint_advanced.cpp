@@ -7,7 +7,7 @@ const t_bint MERSENNE_PRIMES[] =
 { 2, 3, 5, 7, 13, 17, 19, 31, 61, 89, 107, 127, 521, 607, 1279, 2203, 2281,
   3217, 4253, 4423, 9689, 9941, 11213, 19937, 21701, 23209, 44497, 86243,
   110503, 132049, 216091, 756839, 859433, 1257787, 1398269, 2976221, 3021377,
-  6972593, 13466917, 20996011, 24036583, 25964951, -1 };
+  6972593, 13466917, 20996011, 24036583, 25964951, 0 };
 const t_bint PRIMES[] =
 { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
    73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149,
@@ -20,7 +20,9 @@ const t_bint PRIMES[] =
    659, 661, 673, 677, 683, 691, 701, 709, 719, 727, 733, 739, 743, 751,
    757, 761, 769, 773, 787, 797, 809, 811, 821, 823, 827, 829, 839, 853,
    857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937, 941, 947,
-   953, 967, 971, 977, 983, 991, 997, -1 };
+   953, 967, 971, 977, 983, 991, 997, 0 };
+
+using namespace bigint;
 
 BOOST_AUTO_TEST_SUITE(ModularArighmetics)
 
@@ -152,8 +154,8 @@ BOOST_AUTO_TEST_CASE(PowerMod_primes) {
     n = 1;
     t_bint prime = 1;
     for (t_size i = 0;
-         PRIMES[i] <= MAX_PRIME && PRIMES[i] < NUMBER_CAPACITY; i++) {
-        prime = PRIMES[i];
+        MERSENNE_PRIMES[i] > 0 && MERSENNE_PRIMES[i] < NUMBER_CAPACITY; i++) {
+        prime = MERSENNE_PRIMES[i];
     }
     n <<= prime;
     n--;
@@ -166,7 +168,6 @@ BOOST_AUTO_TEST_CASE(PowerMod_primes) {
     BOOST_CHECK_NE(n % x,0);
 
     boost::execution_monitor theMonitor;
-    //unit_test_monitor_t& theMonitor = unit_test_monitor_t::instance();
     theMonitor.p_timeout.set(1);
     theMonitor.execute(boost::bind(monitorPowMod,&x,y,n));
     BOOST_CHECK_EQUAL(x,1);
