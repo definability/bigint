@@ -80,17 +80,13 @@ void mod(t_bint* a,
 
                 shr(divider,1,sizeD);
             }
-            t_bint* one = new t_bint[1];
-            one[0] = 1;
             while (cmp(a,divider,sizeA,
                        sizeD) & (CMP_GREATER | CMP_EQUAL)) {
-                // TODO: create DECREMENT function
                 sub(a,divider,sizeA,sizeD);
                 if (quotient != NULL && sizeQ > 0) {
-                    add(quotient,one,sizeQ,1);
+                    inc(quotient,sizeQ);
                 }
             }
-            delete[] one;
             delete[] divider;
         }
         break;

@@ -64,3 +64,24 @@ void sub(t_bint* a, t_bint* b, t_size size1, t_size size2) {
         }
     }
 }
+
+void inc(t_bint* a, t_size size) {
+    for (t_size i = 0; i < size; i++ ) {
+        a[i]++;
+        if (a[i] != 0) {
+            break;
+        }
+    }
+}
+
+void dec(t_bint* a, t_size size) {
+    for (t_size i = 0; i < size; i++ ) {
+        if (a[i] == 0) {
+            a[i]--;
+        }
+        else {
+            a[i]--;
+            break;
+        }
+    }
+}

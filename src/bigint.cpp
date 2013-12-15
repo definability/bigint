@@ -9,6 +9,7 @@
 #include "config.h"
 #include "base.h"
 #include "boolean.h"
+#include "arithmetics.h"
 #include "mul.h"
 #include "div.h"
 #include "modular.h"
@@ -253,12 +254,13 @@ public:
     }
 
     BigInt& operator++() {
-        return *this += 1;
+        inc(this->value, BLOCKS_NUMBER);
+        return *this;
     }
 
     BigInt operator++(int) {
         BigInt result(*this);
-        *this += 1;
+        inc(this->value, BLOCKS_NUMBER);
         return result;
     }
 
@@ -275,12 +277,13 @@ public:
     }
 
     BigInt& operator--() {
-        return *this -= 1;
+        dec(this->value, BLOCKS_NUMBER);
+        return *this;
     }
 
     BigInt operator--(int) {
         BigInt result(*this);
-        *this -= 1;
+        dec(this->value, BLOCKS_NUMBER);
         return result;
     }
 

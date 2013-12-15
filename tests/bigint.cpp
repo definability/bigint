@@ -5,6 +5,8 @@
 #include "../src/bigint.cpp"
 #include "../src/exceptions.h"
 
+using namespace bigint;
+
 BOOST_AUTO_TEST_SUITE(Constructor)
 
 BOOST_AUTO_TEST_CASE(Comparison_with_word) {
