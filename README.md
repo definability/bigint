@@ -43,7 +43,8 @@ make test_time
 ./tests/bin/time 1 1000
 ```
 Usage of ```time```:
-- First argument is the test number (if you execute ```time``` without parameters, you can see the tests
+- If you execute ```time``` without parameters, you can see available test numbers
+- First argument is the test number 
 - Second argument is the number of BigIntegers to generate and operate
 - Third argument is timeout in seconds (positive integer). Default is 10
 
