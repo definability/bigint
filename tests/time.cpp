@@ -1,5 +1,11 @@
 #include <cstdlib>
 #include <string>
+#include <exception>
+#include <stdexcept>
+#include <boost/test/included/prg_exec_monitor.hpp>
+#include <boost/test/execution_monitor.hpp>
+#include <boost/bind.hpp>
+#include <boost/progress.hpp>
 #include "../src/bigint.cpp"
 #include "time.h"
 #include "time_tests.cpp"
@@ -7,33 +13,23 @@
 using namespace std;
 using namespace bigint;
 
-typedef int (*tt1f)(int); // Time test (tt) functions (f) with 1 argument
 
 string tests[] =
 { "Generation of random numbers", "Addition", "Subtraction", "Multiplication",
   "Division", "Power" };
-tt1f funcs[] = { gen, add, sub, mul, div, pow };
 const t_size TESTS_NUMBER = 6;
 
-int main(int argc, char* argv[]) {
+int cpp_main(int argc, char* argv[]) {
     t_size n;
+    int timeout = 10;
     t_size test_number;
 
-    if (argc < 2) {
-        cerr << "Must be at least 1 argument" << endl;
+    if (argc < 3) {
+        cerr << "Must be at least 2 arguments: test_number repeat_times [timeout_sec]" << endl;
         printHelp();
         return 1;
     }
-    else if (argc == 2) {
-        test_number = getArgv(argv[1]);
-        if (test_number < 1 || test_number > TESTS_NUMBER) {
-            cerr << "There are only " << TESTS_NUMBER << " tests" << endl;
-            printHelp();
-            return 1;
-        }
-        n = 100;
-    }
-    else if (argc == 3) {
+    else {
         test_number = getArgv(argv[1]);
         if (test_number < 1 || test_number > TESTS_NUMBER) {
             cerr << "There are only " << TESTS_NUMBER << " tests" << endl;
@@ -41,18 +37,16 @@ int main(int argc, char* argv[]) {
             return 1;
         }
         n = getArgv(argv[2]);
-        if (n < 0) {
-            cerr << "Invalid number " << argv[2] << endl;
-            return 1;
+        if (argc > 3) {
+            timeout = getArgv(argv[3]);
         }
-    }
-    else {
-        cerr << "Fatal error" << endl;
-        return 1;
     }
     test_number--;
     cout << tests[test_number] << " time test started..." << endl;
-    int result = funcs[test_number](n);
+    boost::execution_monitor monitor;
+    monitor.p_timeout.set(timeout);
+    int result = 0;
+    result = monitor.execute(boost::bind(test_something,n,test_number));
     cout << tests[test_number] << " time test completed ";
     if (result == 0) {
         cout << "successfully!" << endl;
@@ -70,12 +64,11 @@ void printHelp() {
     }
 }
 
-t_size getArgv(char argv[]) {
+long getArgv(char argv[]) {
     char* endptr;
-    t_size n = strtol(argv, &endptr, 10);
+    long n = strtol(argv, &endptr, 10);
     if (!argv || *endptr) {
-        cerr << "Invalid number " << argv[1] << endl;
-        return -1;
+        throw std::runtime_error(string("Invalid number ") + string(argv));
     }
     return n;
 }
