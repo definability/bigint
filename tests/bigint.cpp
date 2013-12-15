@@ -639,6 +639,9 @@ BOOST_AUTO_TEST_CASE(Modulus) {
     BOOST_CHECK_EQUAL(b % a,7);
 }
 
+BOOST_AUTO_TEST_CASE(Generate_bounded_random) {
+}
+
 BOOST_AUTO_TEST_CASE(Multiply_Divide_random) {
     BigInt a;
     a.generate();
@@ -684,28 +687,50 @@ BOOST_AUTO_TEST_CASE(PowerMod) {
     y.generate();
     n = 0;
     BOOST_CHECK_THROW(x.powMod(y,n),DBZException);
+    BOOST_CHECK_EQUAL(x, 0);
+    BOOST_CHECK_EQUAL(n, 0);
 
     x = 0;
     y = 0;
     n = 0;
     BOOST_CHECK_THROW(x.powMod(y,n),DBZException);
+    BOOST_CHECK_EQUAL(x, 0);
+    BOOST_CHECK_EQUAL(y, 0);
+    BOOST_CHECK_EQUAL(n, 0);
 
     x.generate();
     y.generate();
     n = 0;
+    if (x == 0) {
+        x ++;
+    }
+    if (y == 0) {
+        y ++;
+    }
     BOOST_CHECK_THROW(x.powMod(y,n),DBZException);
+    BOOST_CHECK_EQUAL(n, 0);
 
     x = 0;
     y.generate();
     n.generate();
+    if (y == 0) {
+        y ++;
+    }
+    if (n < 2) {
+        n = 2;
+    }
     x.powMod(y,n);
     BOOST_CHECK_EQUAL(x,0);
 
     x = 0;
     y = 0;
     n.generate();
-    x.powMod(y,n);
-    BOOST_CHECK_EQUAL(x,1);
+    if (n < 2) {
+        n = 2;
+    }
+    BOOST_CHECK_THROW(x.powMod(y,n),URException);
+    BOOST_CHECK_EQUAL(x, 0);
+    BOOST_CHECK_EQUAL(y, 0);
 
     x = 1;
     y.generate();
@@ -724,6 +749,29 @@ BOOST_AUTO_TEST_CASE(PowerMod) {
     n = 1;
     x.powMod(y,n);
     BOOST_CHECK_EQUAL(x,0);
+
+    x = 2;
+    y = 2;
+    n = 5;
+    x.powMod(y,n);
+    BOOST_CHECK_EQUAL(x,4);
+
+    x.generate();
+    if (x + 1 == 0 ) {
+        x --;
+    }
+    y = 1;
+    n = x + 1;
+    BigInt oldX(x);
+    x.powMod(y,n);
+    BOOST_CHECK_EQUAL(x,oldX);
+    BOOST_CHECK_EQUAL(y,1);
+    BOOST_CHECK_EQUAL(n,oldX + 1);
+}
+
+int monitorPowMod(BigInt* x, BigInt& y, BigInt& n) {
+    x->powMod(y,n);
+    return 0;
 }
 
 BOOST_AUTO_TEST_CASE(PowerMod_primes) {
@@ -770,7 +818,11 @@ BOOST_AUTO_TEST_CASE(PowerMod_primes) {
     }
     BOOST_CHECK_NE(x % n,0);
     BOOST_CHECK_NE(n % x,0);
-    x.powMod(y,n);
+
+    boost::execution_monitor theMonitor;
+    //unit_test_monitor_t& theMonitor = unit_test_monitor_t::instance();
+    theMonitor.p_timeout.set(1);
+    theMonitor.execute(boost::bind(monitorPowMod,&x,y,n));
     BOOST_CHECK_EQUAL(x,1);
 }
 
