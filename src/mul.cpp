@@ -102,7 +102,7 @@ void mul(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB) {
                 setNull(tmp,sizeR);
             }
             // STAGE2
-            if (!isNull(x[0],sizeX0) && !isNull(x[0],sizeY0)) {
+            if (!isNull(x[0],sizeX0) && !isNull(y[0],sizeY0)) {
                 mov(tmp,x[0],sizeX0);
                 mul(tmp,y[0],sizeR,sizeY0);
                 add(result,tmp,sizeR,sizeR);
