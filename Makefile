@@ -18,7 +18,7 @@ COMPILATION_PREFIX=$(CC) $(CPPFLAGS) $(OBJECTS)
 TEST_COMPILATION_SUFFIX=-lboost_system -lboost_thread -lboost_unit_test_framework
 MAIN_SRC=$(SRCDIR)/main.cpp
 MAIN_OBJ=$(MAIN_SRC:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
-TESTS=config bigint modular time
+TESTS=config bigint bigint_advanced time
 TEST_SOURCES=$(TESTS:%=$(TSTDIR)/%.cpp)
 TEST_OBJECTS=$(TESTS:%=$(OBJDIR)/test_%.o)
 TEST_EXECUTABLES=$(TESTS:%=$(TSBDIR)/%)
@@ -56,9 +56,10 @@ $(TSTDIR)/modular.cpp: $(SRCDIR)/bigint.cpp
 $(TSTDIR)/config.cpp: $(SRCDIR)/config.h
 
 $(TEST_OBJECTS): $(OBJDIR)/test_%.o : $(TSTDIR)/%.cpp
+	mkdir -p $(OBJDIR)
 	$(CC) $(CPPFLAGS) -c $< -o $@ $(TEST_COMPILATION_SUFFIX)
 
-$(TEST_EXECUTABLES): $(TSBDIR)/% : $(OBJDIR)/test_%.o
+$(TEST_EXECUTABLES): $(TSBDIR)/% : $(OBJDIR)/test_%.o $(OBJECTS)
 	mkdir -p $(TSBDIR)
 	$(COMPILATION_PREFIX) $< -o $@ $(TEST_COMPILATION_SUFFIX)
 
