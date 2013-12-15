@@ -7,7 +7,9 @@ My biginteger realization with Boost library tests. Just a lab for my university
 - [x] Class with overloaded operators
 - [\\] Modular arithmetic
 - [|] Boost Test Library
-- [ ] Euclid's algorithm
+- [ ] GCD (Euclid + Binary)
+- [ ] LCM
+- [ ] Interface (read/write)
 
 How to make
 -----------
@@ -50,4 +52,4 @@ Use valgrind. For example:
 ```bash
 valgrind --tool=memcheck --leak-check=full ./tests/bin/time 5 1 2>err.log
 ```
-Flag ```-g``` in ```g++``` allows you to see the line of code in which the memory leak could me fixed.
+Flag ```-g``` in ```g++``` allows you to see the line of code in which the memory leak could be fixed.
