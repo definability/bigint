@@ -9,7 +9,7 @@ My biginteger realization with Boost library tests. Just a lab for my university
 - [|] Boost Test Library
 - [ ] GCD (Euclid + Binary)
 - [ ] LCM
-- [ ] Interface (read/write)
+- [|] Interface (read/write)
 
 How to make
 -----------
