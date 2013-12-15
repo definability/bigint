@@ -161,7 +161,7 @@ public:
        }
      */
 
-    BigInt operator~() {
+    BigInt operator~() const {
         BigInt result(*this);
         for (int i = 0; i < BLOCKS_NUMBER; i++) {
             result.value[i] = ~(this->value[i]);
@@ -404,4 +404,50 @@ public:
         return is;
     }
 };
+
+BigInt gcdEuc(const BigInt& u, const BigInt& v) {
+    if (u == 0) {
+        return v;
+    }
+    else {
+        return gcdEuc(v, u%v);
+    }
+}
+
+BigInt gcdBin(const BigInt& u, const BigInt& v) {
+    // simple cases (termination)
+    if (u == v) {
+        return u;
+    }
+    else if (u == 0) {
+        return v;
+    }
+    else if (v == 0) {
+        return u;
+    }
+    else if (~u & 1) { // u is even
+        if (v & 1) { // v is odd
+            return gcdBin(u >> 1, v);
+        }
+        else { // both u and v are even
+            return gcdBin(u >> 1, v >> 1) << 1;
+        }
+    }
+    else if (~v & 1) { // u is odd, v is even
+        return gcdBin(u, v >> 1);
+    }
+    else if (u > v) { // reduce larger argument
+        return gcdBin((u - v) >> 1, v);
+    }
+    else {
+        return gcdBin((v - u) >> 1, u);
+    }
+}
+
+BigInt lcm(const BigInt& u, const BigInt& v) {
+    BigInt gcd = gcdBin(u,v);
+    BigInt newU = u/gcd;
+    BigInt newV = v/gcd;
+    return newU*newV;
+}
 }
