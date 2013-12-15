@@ -378,6 +378,10 @@ public:
         return !(*this == source);
     }
 
+    explicit operator int() {
+        return (int)this->value[0];
+    }
+
     friend ostream& operator<<(ostream& os, const BigInt& bi) {
         t_size i = BLOCKS_NUMBER;
         while (i-- > 1 && bi[i] == 0) {}

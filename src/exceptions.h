@@ -5,3 +5,9 @@ struct DBZException : public exception {
         return "Division by zero";
     }
 };
+
+struct URException : public exception {
+    const char* what () const throw (){
+        return "Result is undefined";
+    }
+};

@@ -19,28 +19,16 @@ void pow_mod(t_bint* a,
         sizeN = sizeA;
     }
 
-    if (isNull(n,sizeN)) {
-        throw DBZException();
+    mod(a,n,sizeA,sizeN);
+    
+    if (isNull(a,sizeA) && isNull(b,sizeB)) {
+        throw URException();
     }
-
-    if (isNull(b,sizeB)) {
+    else if (isNull(a,sizeA) || cmp(a,1,sizeA) == CMP_EQUAL) {
+    }
+    else if (isNull(b,sizeB)) {
         setNull(a,sizeA);
         a[0] = 1;
-        return;
-    }
-    if (isNull(a,sizeA)) {
-        return;
-    }
-    if (cmp(a,1,sizeA) == CMP_EQUAL) {
-        return;
-    }
-
-    mod(a,n,sizeA,sizeN);
-
-    if (isNull(a,sizeA)) {
-        return;
-    }
-    else if (cmp(a,1,sizeA) == CMP_EQUAL) {
         return;
     }
     else {
