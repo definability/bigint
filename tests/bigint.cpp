@@ -17,7 +17,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(Comparison, T, test_types) {
     T one = 1;
     T zero = 0;
     T two = 2;
-    T mOne = -1;
+    T nOne = -1;
     BOOST_CHECK(bi == one);
     BOOST_CHECK(bi <= one);
     BOOST_CHECK(bi >= one);
@@ -27,8 +27,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(Comparison, T, test_types) {
     BOOST_CHECK(bi != two);
     BOOST_CHECK(bi <= two);
     BOOST_CHECK(bi < two);
-    BOOST_CHECK(bi < mOne);
-    BOOST_CHECK(bi <= mOne);
+    BOOST_CHECK(bi < nOne);
+    BOOST_CHECK(bi <= nOne);
 
     BigInt a;
     BOOST_CHECK(a == zero);
@@ -36,56 +36,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(Comparison, T, test_types) {
     BOOST_CHECK(a >= zero);
     BOOST_CHECK(a < one);
     BOOST_CHECK(a <= one);
-    BOOST_CHECK(a < mOne);
-    BOOST_CHECK(a <= mOne);
+    BOOST_CHECK(a < nOne);
+    BOOST_CHECK(a <= nOne);
 }
-/*
-   BOOST_AUTO_TEST_CASE(Comparison_with_word) {
-   BigInt bi(1);
-   BOOST_CHECK(bi == 1);
-   BOOST_CHECK(bi <= 1);
-   BOOST_CHECK(bi >= 1);
-   BOOST_CHECK(bi != 0);
-   BOOST_CHECK(bi >= 0);
-   BOOST_CHECK(bi > 0);
-   BOOST_CHECK(bi != 2);
-   BOOST_CHECK(bi <= 2);
-   BOOST_CHECK(bi < 2);
-   BOOST_CHECK(bi < -1);
-   BOOST_CHECK(bi <= -1);
-
-   BigInt a;
-   BOOST_CHECK(a == 0);
-   BOOST_CHECK(a <= 0);
-   BOOST_CHECK(a >= 0);
-   BOOST_CHECK(a < 1);
-   BOOST_CHECK(a <= 1);
-   BOOST_CHECK(a < -1);
-   BOOST_CHECK(a <= -1);
-   }
- */
-
-/*
-   BOOST_AUTO_TEST_CASE(Comparison_with_BigInt) {
-    BigInt bi(1);
-    BigInt a;
-    BigInt b(2);
-    BigInt c(1);
-    BigInt n(-1);
-    BOOST_CHECK(bi == c);
-    BOOST_CHECK(bi <= c);
-    BOOST_CHECK(bi >= c);
-    BOOST_CHECK(bi != b);
-    BOOST_CHECK(bi <= b);
-    BOOST_CHECK(bi < b);
-    BOOST_CHECK(bi != a);
-    BOOST_CHECK(bi >= a);
-    BOOST_CHECK(bi > a);
-
-    BOOST_CHECK(bi < n);
-    BOOST_CHECK(bi <= n);
-   }
- */
 
 BOOST_AUTO_TEST_CASE(BOOST_comparison) {
     BigInt bi(1);
