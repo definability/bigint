@@ -66,8 +66,8 @@ $(TEST_EXECUTABLES): $(TSBDIR)/% : $(OBJDIR)/test_%.o $(OBJECTS)
 $(TEST_RUNNERS): test_%: $(TSBDIR)/%
 	$<
 
-$(TEST_RUNNERS_ERRORS): test_%: $(TSBDIR)/%
+$(TEST_RUNNERS_ERRORS): test_%_errors: $(TSBDIR)/%
 	$< --log_level=error
 
-$(TEST_RUNNERS_DETAILED): test_%: $(TSBDIR)/%
+$(TEST_RUNNERS_DETAILED): test_%_detailed: $(TSBDIR)/%
 	$< --log_level=all
