@@ -340,13 +340,13 @@ BOOST_AUTO_TEST_CASE(SHL_random) {
     BOOST_CHECK_EQUAL(a,0);
 }
 
-void test_shift(test_shift) {
+void test_shift(t_size shift) {
     BigInt a,b,c;
     a.generate();
     c=a;
-    a=(c>>test_shift)<<test_shift;
-    b=c<<(NUMBER_CAPACITY-test_shift);
-    b>>=(NUMBER_CAPACITY-test_shift);
+    a=(c>>shift)<<shift;
+    b=c<<(NUMBER_CAPACITY-shift);
+    b>>=(NUMBER_CAPACITY-shift);
     BOOST_CHECK_EQUAL(c,a|b);
 }
 
@@ -382,39 +382,9 @@ BOOST_AUTO_TEST_CASE(SHL_SHR_random) {
     BOOST_CHECK_EQUAL(c,a | b);
     BOOST_CHECK_EQUAL(c - (a | b),0);
 
-    t_size shifts = { NUMBER_CAPACITY/2+1, NUMBER_CAPACITY/2-1, 0, NUMBER_CAPACITY, rand()%NUMBER_CAPACITY };
-
-    /*
-       TEST_SHIFT=NUMBER_CAPACITY/2+1;
-       a.generate();
-       c=a;
-       a=(c>>TEST_SHIFT)<<TEST_SHIFT;
-       b=c<<(NUMBER_CAPACITY-TEST_SHIFT);
-       b>>=(NUMBER_CAPACITY-TEST_SHIFT);
-       BOOST_CHECK_EQUAL(c,a|b);
-       cerr<<endl;
-
-       TEST_SHIFT=0;
-       a.generate();
-       c=a;
-       a=(c>>TEST_SHIFT)<<TEST_SHIFT;
-       b=(c<<(NUMBER_CAPACITY-TEST_SHIFT))>>(NUMBER_CAPACITY-TEST_SHIFT);
-       BOOST_CHECK_EQUAL(c,a|b);
-
-       TEST_SHIFT=NUMBER_CAPACITY;
-       a.generate();
-       c=a;
-       a=(c>>TEST_SHIFT)<<TEST_SHIFT;
-       b=(c<<(NUMBER_CAPACITY-TEST_SHIFT))>>(NUMBER_CAPACITY-TEST_SHIFT);
-       BOOST_CHECK_EQUAL(c,a|b);
-
-       TEST_SHIFT=rand()%NUMBER_CAPACITY;
-       a.generate();
-       c=a;
-       a=(c>>TEST_SHIFT)<<TEST_SHIFT;
-       b=(c<<(NUMBER_CAPACITY-TEST_SHIFT))>>(NUMBER_CAPACITY-TEST_SHIFT);
-       BOOST_CHECK_EQUAL(c,a|b);
-       */
+    t_size shifts[] = { NUMBER_CAPACITY/2+1, NUMBER_CAPACITY/2-1, 0, NUMBER_CAPACITY, rand()%NUMBER_CAPACITY };
+    // Can't use BOOST_PARAM_TEST_CASE here :(
+    for_each(shifts, shifts+5, &test_shift);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
