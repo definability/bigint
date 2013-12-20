@@ -105,7 +105,7 @@ unsigned char cmp(t_bint* a, t_bint* b, t_size size1, t_size size2) {
 }
 
 void mov(t_bint* a, t_bint* b, t_size size) {
-    memcpy(a,b,size*sizeof(t_size));
+    memcpy(a,b,size * sizeof(t_size));
 }
 
 t_size msw(t_bint* a, t_size size) {

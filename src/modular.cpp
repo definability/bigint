@@ -20,7 +20,7 @@ void pow_mod(t_bint* a,
     }
 
     mod(a,n,sizeA,sizeN);
-    
+
     if (isNull(a,sizeA) && isNull(b,sizeB)) {
         throw URException();
     }

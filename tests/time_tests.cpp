@@ -2,13 +2,15 @@
 #include <boost/progress.hpp>
 #include <boost/thread.hpp>
 
-
 typedef int (*ti1f)(BigInt*); // Test iteration (ti) functions (f) with 1 argument
 
 struct TestableFunctionIteration {
     ti1f f;
     int bigintsNeeded;
-    TestableFunctionIteration(ti1f f, int bigintsNeeded): f(f), bigintsNeeded(bigintsNeeded) {
+    TestableFunctionIteration(ti1f f,
+                              int bigintsNeeded) : f(f),
+                                                   bigintsNeeded(bigintsNeeded)
+    {
     }
 };
 
@@ -64,18 +66,18 @@ int test_something(int n, int functionNumber) {
         bigInts = new BigInt[n];
     }
     else {
-        cout<<endl;
+        cout << endl;
         cout << "Generating sequence of BigInts";
         t.restart();
-        bigInts = generate(n+iter.bigintsNeeded-1);
+        bigInts = generate(n + iter.bigintsNeeded - 1);
         cout << "Generated in " << t.elapsed() << " s" << endl;
     }
 
-    cout<<endl;
+    cout << endl;
     cout << "Testing";
     boost::progress_display show_progress(n);
     t.restart();
-    for (int i=0; i<n; i++) {
+    for (int i = 0; i < n; i++) {
         iter.f(&bigInts[i]);
         ++show_progress;
     }

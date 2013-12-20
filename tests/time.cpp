@@ -13,7 +13,6 @@
 using namespace std;
 using namespace bigint;
 
-
 string tests[] =
 { "Generation of random numbers", "Addition", "Subtraction", "Multiplication",
   "Division", "Power" };
@@ -66,16 +65,19 @@ int cpp_main(int argc, char* argv[]) {
 
 void printHelp(const char programName[]) {
     cout << endl;
-    cout << "USAGE: " << programName << " TEST_NUMBER REPEAT_TIMES [TIMEOUT_SEC=10]" << endl;
+    cout << "USAGE: " << programName <<
+    " TEST_NUMBER REPEAT_TIMES [TIMEOUT_SEC=10]" << endl;
     cout << endl;
-    cout << "  TEST_NUMBER  is a number of the test from the following list:" << endl;
+    cout <<
+    "  TEST_NUMBER  is a number of the test from the following list:" << endl;
     for (t_size i = 0; i < TESTS_NUMBER; i++ ) {
         cout << "    [" << i + 1 << "] " << tests[i] << endl;
     }
     cout << endl;
     cout << "  REPEAT_TIMES is a number of iterations of every test" << endl;
     cout << endl;
-    cout << "  TIMEOUT_SEC  is a time in seconds what you are ready to wait." << endl;
+    cout <<
+    "  TIMEOUT_SEC  is a time in seconds what you are ready to wait." << endl;
     cout << "               Standard value is 10" << endl;
     cout << endl;
     cout << "  EXAMPLES:" << endl;
@@ -83,8 +85,10 @@ void printHelp(const char programName[]) {
     cout << "        will cause million times BigInt generation" << endl;
     cout << endl;
     cout << "    " << programName << " 6 10 100" << endl;
-    cout << "        will cause ten times BigInt power by modulus and will be" << endl;
-    cout << "        aborted if the timeout will reach the 100 seconds barier" << endl;
+    cout <<
+    "        will cause ten times BigInt power by modulus and will be" << endl;
+    cout <<
+    "        aborted if the timeout will reach the 100 seconds barier" << endl;
     cout << endl;
 }
 

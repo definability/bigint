@@ -1,7 +1,6 @@
 #define BOOST_TEST_MODULE BigInt class
 #include <boost/test/included/unit_test.hpp>
 #include <boost/test/test_case_template.hpp>
-//#include <boost/test/unit_test.hpp>
 #include <boost/utility/binary.hpp>
 #include <boost/mpl/list.hpp>
 #include "../src/bigint.cpp"
@@ -40,34 +39,34 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(Comparison, T, test_types) {
     BOOST_CHECK(a < mOne);
     BOOST_CHECK(a <= mOne);
 }
-    /*
-BOOST_AUTO_TEST_CASE(Comparison_with_word) {
-    BigInt bi(1);
-    BOOST_CHECK(bi == 1);
-    BOOST_CHECK(bi <= 1);
-    BOOST_CHECK(bi >= 1);
-    BOOST_CHECK(bi != 0);
-    BOOST_CHECK(bi >= 0);
-    BOOST_CHECK(bi > 0);
-    BOOST_CHECK(bi != 2);
-    BOOST_CHECK(bi <= 2);
-    BOOST_CHECK(bi < 2);
-    BOOST_CHECK(bi < -1);
-    BOOST_CHECK(bi <= -1);
+/*
+   BOOST_AUTO_TEST_CASE(Comparison_with_word) {
+   BigInt bi(1);
+   BOOST_CHECK(bi == 1);
+   BOOST_CHECK(bi <= 1);
+   BOOST_CHECK(bi >= 1);
+   BOOST_CHECK(bi != 0);
+   BOOST_CHECK(bi >= 0);
+   BOOST_CHECK(bi > 0);
+   BOOST_CHECK(bi != 2);
+   BOOST_CHECK(bi <= 2);
+   BOOST_CHECK(bi < 2);
+   BOOST_CHECK(bi < -1);
+   BOOST_CHECK(bi <= -1);
 
-    BigInt a;
-    BOOST_CHECK(a == 0);
-    BOOST_CHECK(a <= 0);
-    BOOST_CHECK(a >= 0);
-    BOOST_CHECK(a < 1);
-    BOOST_CHECK(a <= 1);
-    BOOST_CHECK(a < -1);
-    BOOST_CHECK(a <= -1);
-}
-*/
+   BigInt a;
+   BOOST_CHECK(a == 0);
+   BOOST_CHECK(a <= 0);
+   BOOST_CHECK(a >= 0);
+   BOOST_CHECK(a < 1);
+   BOOST_CHECK(a <= 1);
+   BOOST_CHECK(a < -1);
+   BOOST_CHECK(a <= -1);
+   }
+ */
 
 /*
-BOOST_AUTO_TEST_CASE(Comparison_with_BigInt) {
+   BOOST_AUTO_TEST_CASE(Comparison_with_BigInt) {
     BigInt bi(1);
     BigInt a;
     BigInt b(2);
@@ -85,8 +84,8 @@ BOOST_AUTO_TEST_CASE(Comparison_with_BigInt) {
 
     BOOST_CHECK(bi < n);
     BOOST_CHECK(bi <= n);
-}
-*/
+   }
+ */
 
 BOOST_AUTO_TEST_CASE(BOOST_comparison) {
     BigInt bi(1);
@@ -343,11 +342,11 @@ BOOST_AUTO_TEST_CASE(SHL_random) {
 void test_shift(t_size shift) {
     BigInt a,b,c;
     a.generate();
-    c=a;
-    a=(c>>shift)<<shift;
-    b=c<<(NUMBER_CAPACITY-shift);
-    b>>=(NUMBER_CAPACITY-shift);
-    BOOST_CHECK_EQUAL(c,a|b);
+    c = a;
+    a = (c >> shift) << shift;
+    b = c << (NUMBER_CAPACITY - shift);
+    b >>= (NUMBER_CAPACITY - shift);
+    BOOST_CHECK_EQUAL(c,a | b);
 }
 
 BOOST_AUTO_TEST_CASE(SHL_SHR_random) {
@@ -382,9 +381,11 @@ BOOST_AUTO_TEST_CASE(SHL_SHR_random) {
     BOOST_CHECK_EQUAL(c,a | b);
     BOOST_CHECK_EQUAL(c - (a | b),0);
 
-    t_size shifts[] = { NUMBER_CAPACITY/2+1, NUMBER_CAPACITY/2-1, 0, NUMBER_CAPACITY, rand()%NUMBER_CAPACITY };
+    t_size shifts[] =
+    { NUMBER_CAPACITY / 2 + 1, NUMBER_CAPACITY / 2 - 1, 0, NUMBER_CAPACITY,
+     rand() % NUMBER_CAPACITY };
     // Can't use BOOST_PARAM_TEST_CASE here :(
-    for_each(shifts, shifts+5, &test_shift);
+    for_each(shifts, shifts + 5, &test_shift);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

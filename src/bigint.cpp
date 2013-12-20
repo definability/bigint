@@ -413,7 +413,7 @@ BigInt gcdEuc(const BigInt& u, const BigInt& v) {
         return v;
     }
     else {
-        return gcdEuc(v, u%v);
+        return gcdEuc(v, u % v);
     }
 }
 
@@ -449,8 +449,8 @@ BigInt gcdBin(const BigInt& u, const BigInt& v) {
 
 BigInt lcm(const BigInt& u, const BigInt& v) {
     BigInt gcd = gcdBin(u,v);
-    BigInt newU = u/gcd;
-    BigInt newV = v/gcd;
-    return newU*newV;
+    BigInt newU = u / gcd;
+    BigInt newV = v / gcd;
+    return newU * newV;
 }
 }
