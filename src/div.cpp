@@ -3,7 +3,6 @@
 #include "boolean.h"
 #include "arithmetics.h"
 #include "div.h"
-#include "exceptions.h"
 
 /**
  * Divide a by b. Keep result (reminder) in a.
@@ -13,7 +12,7 @@ void mod(t_bint* a,
          t_size sizeA,
          t_size sizeB,
          t_bint* quotient,
-         t_size sizeQ) {
+         t_size sizeQ) throw (DBZException) {
     if (isNull(b)) {
         throw DBZException();
     }
@@ -97,7 +96,7 @@ void mod(t_bint* a,
     }
 }
 
-void div(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB) {
+void div(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB) throw (DBZException) {
     if (!sizeB || sizeB > sizeA) {
         sizeB = sizeA;
     }
