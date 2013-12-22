@@ -8,36 +8,44 @@
 
 using namespace bigint;
 
-BOOST_AUTO_TEST_SUITE(Constructor)
+struct MainFixture {
+    MainFixture() {
+    }
+    ~MainFixture() {
+    }
+};
+typedef boost::mpl::list<t_bint, BigInt> test_types;
 
-typedef boost::mpl::list<long, BigInt> test_types;
+BOOST_GLOBAL_FIXTURE(MainFixture);
+
+BOOST_AUTO_TEST_SUITE(Constructor)
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(Comparison, T, test_types) {
     BigInt bi(1);
-    T one = 1;
+    T unity = 1;
     T zero = 0;
     T two = 2;
-    T nOne = -1;
-    BOOST_CHECK(bi == one);
-    BOOST_CHECK(bi <= one);
-    BOOST_CHECK(bi >= one);
+    T nUnity = -1;
+    BOOST_CHECK(bi == unity);
+    BOOST_CHECK(bi <= unity);
+    BOOST_CHECK(bi >= unity);
     BOOST_CHECK(bi != zero);
     BOOST_CHECK(bi >= zero);
     BOOST_CHECK(bi > zero);
     BOOST_CHECK(bi != two);
     BOOST_CHECK(bi <= two);
     BOOST_CHECK(bi < two);
-    BOOST_CHECK(bi < nOne);
-    BOOST_CHECK(bi <= nOne);
+    BOOST_CHECK(bi < nUnity);
+    BOOST_CHECK(bi <= nUnity);
 
     BigInt a;
     BOOST_CHECK(a == zero);
     BOOST_CHECK(a <= zero);
     BOOST_CHECK(a >= zero);
-    BOOST_CHECK(a < one);
-    BOOST_CHECK(a <= one);
-    BOOST_CHECK(a < nOne);
-    BOOST_CHECK(a <= nOne);
+    BOOST_CHECK(a < unity);
+    BOOST_CHECK(a <= unity);
+    BOOST_CHECK(a < nUnity);
+    BOOST_CHECK(a <= nUnity);
 }
 
 BOOST_AUTO_TEST_CASE(BOOST_comparison) {
@@ -57,22 +65,23 @@ BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(Basic_functionality)
 
-BOOST_AUTO_TEST_CASE(Equate_BigInt_word) {
+BOOST_AUTO_TEST_CASE_TEMPLATE(Equate_BigInt, T, test_types) {
     BigInt bi;
-    t_bint a = 0;
-    bi = a;
+    T a = 0;
+    bi = (BigInt)a;
     BOOST_CHECK_EQUAL(bi,a);
     a = 1;
-    bi = a;
+    bi = (BigInt)a;
     BOOST_CHECK_EQUAL(bi,a);
-    t_bint b = 0;
-    bi = b;
+    T b = 0;
+    bi = (BigInt)b;
     BOOST_CHECK_EQUAL(bi,b);
     b = 1;
     BOOST_CHECK_MESSAGE(bi != b,
                         "Link copy detection (correctness of operator=)");
 }
 
+/*
 BOOST_AUTO_TEST_CASE(Equate_BigInt_BigInt) {
     BigInt bi;
     BigInt a = 0;
@@ -88,6 +97,7 @@ BOOST_AUTO_TEST_CASE(Equate_BigInt_BigInt) {
     BOOST_CHECK_MESSAGE(bi != b,
                         "Link copy detection (correctness of operator=)");
 }
+*/
 
 BOOST_AUTO_TEST_CASE(Equate_random_BigInt) {
     BigInt bi;

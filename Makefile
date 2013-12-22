@@ -15,7 +15,7 @@ SOURCE_FILES=base.cpp boolean.cpp arithmetics.cpp mul.cpp div.cpp modular.cpp
 SOURCES=$(SOURCE_FILES:%=$(SRCDIR)/%)
 OBJECTS=$(SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 COMPILATION_PREFIX=$(CC) $(CPPFLAGS) $(OBJECTS)
-TEST_COMPILATION_SUFFIX=-lboost_system -lboost_thread -lboost_unit_test_framework
+TEST_COMPILATION_SUFFIX=#-lboost_system -lboost_thread -lboost_unit_test_framework
 MAIN_SRC=$(SRCDIR)/main.cpp
 MAIN_OBJ=$(MAIN_SRC:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 TESTS=config bigint bigint_advanced time

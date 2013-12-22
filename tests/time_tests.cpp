@@ -7,9 +7,8 @@ typedef int (*ti1f)(BigInt*); // Test iteration (ti) functions (f) with 1 argume
 struct TestableFunctionIteration {
     ti1f f;
     int bigintsNeeded;
-    TestableFunctionIteration(ti1f f,
-                              int bigintsNeeded) : f(f),
-                                                   bigintsNeeded(bigintsNeeded)
+    TestableFunctionIteration(ti1f f, int bigintsNeeded) : f(f),
+                                    bigintsNeeded(bigintsNeeded)
     {
     }
 };
