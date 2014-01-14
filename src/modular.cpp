@@ -26,8 +26,8 @@ void pow_mod(t_bint* a,
         mu[sizeMu-1] = 1;
         barrettMu(mu, n, sizeMu, sizeN);
 
-    //mod(a,n,sizeA,sizeN);
-    barrettMod(a, n, mu, sizeA, sizeN, sizeMu);
+    mod(a,n,sizeA,sizeN);
+    //barrettMod(a, n, mu, sizeA, sizeN, sizeMu);
 
     if (isNull(a,sizeA) && isNull(b,sizeB)) {
         throw URException();
