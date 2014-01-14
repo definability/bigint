@@ -11,7 +11,7 @@ OBJDIR=obj
 BINDIR=bin
 TSTDIR=tests
 TSBDIR=tests/bin
-SOURCE_FILES=base.cpp boolean.cpp arithmetics.cpp mul.cpp div.cpp modular.cpp
+SOURCE_FILES=base.cpp boolean.cpp arithmetics.cpp mul.cpp div.cpp barrett.cpp modular.cpp
 SOURCES=$(SOURCE_FILES:%=$(SRCDIR)/%)
 OBJECTS=$(SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 COMPILATION_PREFIX=$(CC) $(CPPFLAGS) $(OBJECTS)
@@ -40,6 +40,7 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cpp
 	mkdir -p $(OBJDIR)
 	$(CC) $(CPPFLAGS) -c $< -o $@
 
+$(SRCDIR)/bigint.cpp: $(SRCDIR)/config.h
 $(MAIN_SRC): $(SRCDIR)/bigint.cpp
 $(MAIN_OBJ): $(SRCDIR)/main.cpp
 	mkdir -p $(OBJDIR)
