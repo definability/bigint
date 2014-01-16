@@ -5,11 +5,11 @@ My biginteger realization with Boost library tests. Just a lab for my university
 - [x] Boolean arithmetic
 - [x] Basic arithmetic
 - [x] Class with overloaded operators
-- [\\] Modular arithmetic
-- [|] Boost Test Library
-- [ ] GCD (Euclid + Binary)
-- [ ] LCM
-- [|] Interface (read/write)
+- [x] Modular arithmetic
+- [x] Boost Test Library
+- [x] GCD (Euclid + Binary)
+- [x] LCM
+- [x] Interface (read/write)
 
 How to make
 -----------
