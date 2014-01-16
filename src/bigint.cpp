@@ -404,13 +404,19 @@ public:
     }
 
     friend istream& operator>>(istream& is, const BigInt& bi) {
+        string input;
+        is >> input;
+        scanBI(bi.value, input.c_str(), BLOCKS_NUMBER);
         return is;
     }
 };
 
 BigInt gcdEuc(const BigInt& u, const BigInt& v) {
-    if (u == 0) {
+    if (u == 0 || u == v) {
         return v;
+    }
+    else if (v == 0) {
+        return u;
     }
     else {
         return gcdEuc(v, u % v);
@@ -419,16 +425,13 @@ BigInt gcdEuc(const BigInt& u, const BigInt& v) {
 
 BigInt gcdBin(const BigInt& u, const BigInt& v) {
     // simple cases (termination)
-    if (u == v) {
+    if (v==0 || u == v) {
         return u;
     }
     else if (u == 0) {
         return v;
     }
-    else if (v == 0) {
-        return u;
-    }
-    else if (~u & 1) { // u is even
+    else if (!(u & 1)) { // u is even
         if (v & 1) { // v is odd
             return gcdBin(u >> 1, v);
         }
@@ -436,7 +439,7 @@ BigInt gcdBin(const BigInt& u, const BigInt& v) {
             return gcdBin(u >> 1, v >> 1) << 1;
         }
     }
-    else if (~v & 1) { // u is odd, v is even
+    else if (!(v & 1)) { // u is odd, v is even
         return gcdBin(u, v >> 1);
     }
     else if (u > v) { // reduce larger argument
@@ -448,7 +451,7 @@ BigInt gcdBin(const BigInt& u, const BigInt& v) {
 }
 
 BigInt lcm(const BigInt& u, const BigInt& v) {
-    BigInt gcd = gcdBin(u,v);
+    BigInt gcd = gcdEuc(u,v);
     BigInt newU = u / gcd;
     BigInt newV = v / gcd;
     return newU * newV;

@@ -34,21 +34,22 @@ void displayBI(t_bint* a, t_size size) {
 
 void scanBI(t_bint* a, const char* aStr, t_size sizeA) {
     t_size size = strlen(aStr);
-    t_size loopEnd = size - BLOCKS_NUMBER * BLOCK_SIZE;
-    loopEnd = loopEnd > 0 ? loopEnd : 0 + size % ULONG_SIZE;
     t_size i;
-    char* currentNumber = new char[ULONG_SIZE * 2 + 1];
-    currentNumber[ULONG_SIZE * 2] = 0;
-    char* tmp;
-    for (i = size - ULONG_SIZE; i >= loopEnd; i -= ULONG_SIZE,
-         (ULONG*)a++) {
-        memcpy(currentNumber, &aStr[i], ULONG_SIZE);
+    const t_size ULONG_STR_SIZE = ULONG_SIZE * 2;
+    t_size loopEnd = size - BLOCKS_NUMBER * BLOCK_SIZE;
+    loopEnd = loopEnd > 0 ? loopEnd : 0 + size % ULONG_STR_SIZE;
+    char* currentNumber = new char[ULONG_STR_SIZE + 1];
+    memset(currentNumber, 0, ULONG_STR_SIZE + 1);
+    char* tmp; // Do not delete[]! Needed for strtoul
+    for (i = size - ULONG_STR_SIZE; i >= loopEnd; i -= ULONG_STR_SIZE,
+            (ULONG*)a++) {
+        memcpy(currentNumber, &aStr[i], ULONG_STR_SIZE);
         *(ULONG*)a = strtoul(currentNumber, &tmp, 16);
     }
-    memcpy(currentNumber, &aStr[loopEnd - size % ULONG_SIZE], ULONG_SIZE);
+    memset(currentNumber, 0, ULONG_STR_SIZE + 1);
+    memcpy(currentNumber, &aStr[0], size % ULONG_STR_SIZE);
     *(ULONG*)a = strtoul(currentNumber, &tmp, 16);
     delete[] currentNumber;
-    delete[] tmp;
 }
 
 unsigned char cmp(t_bint* a, t_bint b, t_size size) {
