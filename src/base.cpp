@@ -42,7 +42,7 @@ void scanBI(t_bint* a, const char* aStr, t_size sizeA) {
     memset(currentNumber, 0, ULONG_STR_SIZE + 1);
     char* tmp; // Do not delete[]! Needed for strtoul
     for (i = size - ULONG_STR_SIZE; i >= loopEnd; i -= ULONG_STR_SIZE,
-            (ULONG*)a++) {
+         (ULONG*)a++) {
         memcpy(currentNumber, &aStr[i], ULONG_STR_SIZE);
         *(ULONG*)a = strtoul(currentNumber, &tmp, 16);
     }

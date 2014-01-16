@@ -19,12 +19,12 @@ void pow_mod(t_bint* a,
     if (!sizeN) {
         sizeN = sizeA;
     }
-        t_size mswN = msw(n,sizeN)+1;
-        t_size sizeMu = mswN*2+1;
-        t_bint* mu = new t_bint[sizeMu];
-        setNull(mu,sizeMu);
-        mu[sizeMu-1] = 1;
-        barrettMu(mu, n, sizeMu, sizeN);
+    t_size mswN = msw(n,sizeN) + 1;
+    t_size sizeMu = mswN * 2 + 1;
+    t_bint* mu = new t_bint[sizeMu];
+    setNull(mu,sizeMu);
+    mu[sizeMu - 1] = 1;
+    barrettMu(mu, n, sizeMu, sizeN);
 
     mod(a,n,sizeA,sizeN);
     //barrettMod(a, n, mu, sizeA, sizeN, sizeMu);
@@ -55,7 +55,6 @@ void pow_mod(t_bint* a,
         mov(p,b,sizeP);
         mov(tmp,a,sizeA);
 
-
         t_bint i = 0;
         while (!isNull(p,sizeP)) {
             if (p[0] & 1) {
@@ -81,6 +80,7 @@ void pow_mod(t_bint* a,
         delete[] tmp;
         delete[] result;
         delete[] p;
+        delete[] mu;
     }
 }
 
@@ -127,13 +127,13 @@ void sqrMod(t_bint* a, t_bint* n, t_size sizeA, t_size sizeN) {
 }
 
 void barrettMulMod(t_bint* a,
-            t_bint* b,
-            t_bint* n,
-            t_bint* mu,
-            t_size sizeA,
-            t_size sizeB,
-            t_size sizeN,
-            t_size sizeMu) {
+                   t_bint* b,
+                   t_bint* n,
+                   t_bint* mu,
+                   t_size sizeA,
+                   t_size sizeB,
+                   t_size sizeN,
+                   t_size sizeMu) {
     if (!sizeB) {
         sizeB = sizeA;
     }
@@ -167,7 +167,7 @@ void barrettMulMod(t_bint* a,
 }
 
 void barrettSqrMod(t_bint* a, t_bint* n, t_bint* mu, t_size sizeA,
-        t_size sizeN, t_size sizeMu) {
+                   t_size sizeN, t_size sizeMu) {
     sqr(a,sizeA);
     barrettMod(a, n, mu, sizeA, sizeN, sizeMu);
 }

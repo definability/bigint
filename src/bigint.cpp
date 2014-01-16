@@ -425,7 +425,7 @@ BigInt gcdEuc(const BigInt& u, const BigInt& v) {
 
 BigInt gcdBin(const BigInt& u, const BigInt& v) {
     // simple cases (termination)
-    if (v==0 || u == v) {
+    if (v == 0 || u == v) {
         return u;
     }
     else if (u == 0) {

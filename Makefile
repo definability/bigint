@@ -42,7 +42,7 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cpp
 
 $(SRCDIR)/bigint.cpp: $(SRCDIR)/config.h
 $(MAIN_SRC): $(SRCDIR)/bigint.cpp
-$(MAIN_OBJ): $(SRCDIR)/main.cpp
+$(MAIN_OBJ): $(MAIN_SRC)
 	mkdir -p $(OBJDIR)
 	$(CC) $(CPPFLAGS) -c $(MAIN_SRC) -o $(MAIN_OBJ)
 

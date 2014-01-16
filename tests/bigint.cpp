@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(Equate_BigInt, T, test_types) {
 }
 
 /*
-BOOST_AUTO_TEST_CASE(Equate_BigInt_BigInt) {
+   BOOST_AUTO_TEST_CASE(Equate_BigInt_BigInt) {
     BigInt bi;
     BigInt a = 0;
     bi = a;
@@ -96,8 +96,8 @@ BOOST_AUTO_TEST_CASE(Equate_BigInt_BigInt) {
     b = 1;
     BOOST_CHECK_MESSAGE(bi != b,
                         "Link copy detection (correctness of operator=)");
-}
-*/
+   }
+ */
 
 BOOST_AUTO_TEST_CASE(Equate_random_BigInt) {
     BigInt bi;
@@ -346,7 +346,7 @@ BOOST_AUTO_TEST_CASE(SHL_SHR_random) {
 
     t_size shifts[] =
     { NUMBER_CAPACITY / 2 + 1, NUMBER_CAPACITY / 2 - 1, 0, NUMBER_CAPACITY,
-     rand() % NUMBER_CAPACITY };
+      rand() % NUMBER_CAPACITY };
     // Can't use BOOST_PARAM_TEST_CASE here :(
     for_each(shifts, shifts + 5, &test_shift);
 }

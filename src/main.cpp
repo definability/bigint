@@ -5,13 +5,18 @@
 using namespace std;
 
 int main() {
-    bigint::BigInt bi_a(0x06);
-    bigint::BigInt bi_b(0x94);
-    bigint::BigInt bi_n(0x94);
-    cout << "print 'Python test started.'" << endl;
-    for (t_size i = 0; i < 10; i++) {
+    bigint::BigInt a;
+    cin >> a;
+    cout << a << endl;
+    /*
+       bigint::BigInt bi_a(0x06);
+       bigint::BigInt bi_b(0x94);
+       bigint::BigInt bi_n(0x94);
+       cout << "print 'Python test started.'" << endl;
+       for (t_size i = 0; i < 10; i++) {
         bi_a.generate();
-    }
+       }
+     */
     /*
        bi_b=(t_bint)1;
        bi_b<<=BLOCK_SIZE;
@@ -53,7 +58,8 @@ int main() {
         cout<<"print 'Result is "<<bi_a.powMod(bi_b, bi_n)<<"'"<<endl;
        }
      */
-    for (t_size i = 0; i < 100; i++) {
+    /*
+       for (t_size i = 0; i < 100; i++) {
         bi_a.generate();
         cout << "a=" << bi_a << endl;
         cout << "print a>>1==";
@@ -62,7 +68,8 @@ int main() {
         cout << "print 'Difference is',(a>>1)-" << bi_a << endl;
         cout << "print a>>1" << endl;
         cout << "print ''" << endl;
-    }
+       }
+     */
     /*
        //DIVISION
        for (t_size i=0; i<100; i++) {

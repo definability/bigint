@@ -15,8 +15,8 @@ using namespace bigint;
 
 string tests[] =
 { "Generation of random numbers", "Addition", "Subtraction", "Multiplication",
-  "Division", "Power" };
-const t_size TESTS_NUMBER = 6;
+  "Division", "Power", "GCD (Euclid)", "GCD (Bin)", "LCM" };
+const t_size TESTS_NUMBER = 9;
 
 int cpp_main(int argc, char* argv[]) {
     t_size n;

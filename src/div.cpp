@@ -96,7 +96,8 @@ void mod(t_bint* a,
     }
 }
 
-void div(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB) throw (DBZException) {
+void div(t_bint* a, t_bint* b, t_size sizeA,
+         t_size sizeB) throw (DBZException) {
     if (!sizeB || sizeB > sizeA) {
         sizeB = sizeA;
     }

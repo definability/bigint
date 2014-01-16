@@ -8,8 +8,8 @@ struct TestableFunctionIteration {
     ti1f f;
     int bigintsNeeded;
     TestableFunctionIteration(ti1f f, int bigintsNeeded) : f(f),
-                                    bigintsNeeded(bigintsNeeded)
-    {
+                                                           bigintsNeeded(
+                                                               bigintsNeeded) {
     }
 };
 
@@ -19,7 +19,10 @@ TestableFunctionIteration fIters[] = {
     TestableFunctionIteration(subI, 2),
     TestableFunctionIteration(mulI, 2),
     TestableFunctionIteration(divI, 2),
-    TestableFunctionIteration(powI, 3)
+    TestableFunctionIteration(powI, 3),
+    TestableFunctionIteration(gcdEuI, 2),
+    TestableFunctionIteration(gcdBinI, 2),
+    TestableFunctionIteration(lcmI, 2)
 };
 
 BigInt* generate(int n) {
@@ -54,6 +57,18 @@ int divI(BigInt* bigInts) {
 }
 int powI(BigInt* bigInts) {
     bigInts[0].powMod(bigInts[1],bigInts[2]);
+    return 0;
+}
+int gcdEuI(BigInt* bigInts) {
+    gcdEuc(bigInts[0], bigInts[1]);
+    return 0;
+}
+int gcdBinI(BigInt* bigInts) {
+    gcdBin(bigInts[0], bigInts[1]);
+    return 0;
+}
+int lcmI(BigInt* bigInts) {
+    lcm(bigInts[0], bigInts[1]);
     return 0;
 }
 
