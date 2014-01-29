@@ -47,6 +47,15 @@ BOOST_AUTO_TEST_CASE(PowerMod) {
     BOOST_CHECK_EQUAL(n, 0);
 
     x.generate();
+    n.generate();
+    n>>=(NUMBER_CAPACITY/2);
+    x %= n;
+    cerr<<"x = "<<x<<endl;
+    cerr<<"n = "<<n<<endl;
+    BOOST_REQUIRE_EQUAL(x.powMod((BigInt)1,n), x);
+    BOOST_REQUIRE_EQUAL(x.powMod((BigInt)2,n), (x*x)%n);
+
+    x.generate();
     y.generate();
     n = 0;
     if (x == 0) {
@@ -172,5 +181,6 @@ BOOST_AUTO_TEST_CASE(PowerMod_primes) {
     theMonitor.execute(boost::bind(monitorPowMod,&x,y,n));
     BOOST_CHECK_EQUAL(x,1);
 }
+
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -525,6 +525,9 @@ BOOST_AUTO_TEST_CASE(Multiply_advanced_test_random) {
     b.generate();
     c.generate();
 
+    BOOST_REQUIRE_EQUAL((BigInt)0, a*(BigInt)0);
+    BOOST_REQUIRE_EQUAL(a, a*1);
+
     result = (a + b) * c;
 
     if (a + b < 2) {

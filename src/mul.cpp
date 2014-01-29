@@ -4,11 +4,74 @@
 #include "arithmetics.h"
 #include "mul.h"
 
+inline void mulWords(t_bint* a, t_bint b) {
+    asm (
+        "mul %3"
+        : "=a" (a[0]), "=d" (a[1])
+        : "a" (*a), "d" (b)
+    );
+}
+
+void mul(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB) {
+    if (!sizeB || sizeB > sizeA) {
+        sizeB = sizeA;
+    }
+    if (isNull(a, sizeA) || isNull(b, sizeB)) {
+        setNull(a, sizeA);
+    }
+    else if (sizeA == 1) {
+        a[0] *= b[0];
+    }
+    else {
+        t_size mswA = msw(a,sizeA), mswB = msw(b,sizeB);
+        if ((mswA | mswB) == 0) {
+            mulWords(a, *b);
+        }
+        else {
+            mswA++;
+            mswB++;
+            t_size s, i;
+            t_size sizeW = mswA + mswB + 2;
+            t_size sizeT = 4;
+            t_size sizeTmp = 2;
+            t_bint *t = new t_bint[sizeT];
+            t_bint *tmp = new t_bint[sizeTmp];
+            setNull(t,sizeT);
+            setNull(tmp,sizeTmp);
+            t_bint *w = new t_bint[sizeW];
+            setNull(w,sizeW);
+            for (s=0; s<sizeW; s++) {
+                for (i=s; i>=0; i--) {
+                    if (mswA>i && mswB>s-i) {
+                        tmp[0] = a[i];
+                        mulWords(tmp,b[s-i]);
+                        add(t,tmp,sizeT,sizeTmp);
+                        setNull(tmp,sizeTmp);
+                    }
+                }
+                w[s] = t[0];
+                swr(t,1,sizeT);
+            }
+            if (sizeA > sizeW) {
+                mov(a,w,sizeW);
+                setNull(&a[sizeW],sizeA-sizeW);
+            }
+            else {
+                mov(a,w,sizeA);
+            }
+            delete[] w;
+            delete[] tmp;
+            delete[] t;
+        }
+    }
+}
+
+
 /**
  * Karatsuba's multiplication method (a=a*b).
  * That's why parameter `a' must have the resulting length.
  */
-void mul(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB) {
+void mulK(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB) {
     if (!sizeB || sizeB > sizeA) {
         sizeB = sizeA;
     }

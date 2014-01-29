@@ -130,7 +130,7 @@ public:
         return msb(this->value, BLOCKS_NUMBER);
     }
 
-    BigInt& powMod(BigInt& p, BigInt& n) {
+    BigInt& powMod(const BigInt& p, const BigInt& n) {
         pow_mod(this->value, p.value, n.value);
         return *this;
     }

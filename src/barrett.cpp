@@ -12,12 +12,13 @@ void barrettMu(t_bint* b, t_bint* n, t_size sizeB, t_size sizeN) {
 
 void barrettMod(t_bint* a, t_bint* n, t_bint* mu,
                 t_size sizeA, t_size sizeN, t_size sizeMu) {
-    t_size sizeQ = sizeA;
+    t_size sizeQ = sizeA+1;
     t_size k = msw(n,sizeN) + 1;
     if (k - 1 > msw(a,sizeA)) {
         return;
     }
     t_bint* q = new t_bint[sizeQ];
+    setNull(q,sizeQ);
     mov(q, a, sizeA);
     swr(q,k,sizeQ);
     mul(q,mu,sizeQ,sizeMu);

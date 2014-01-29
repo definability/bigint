@@ -19,6 +19,7 @@ void pow_mod(t_bint* a,
     if (!sizeN) {
         sizeN = sizeA;
     }
+
     t_size mswN = msw(n,sizeN) + 1;
     t_size sizeMu = mswN * 2 + 1;
     t_bint* mu = new t_bint[sizeMu];
@@ -27,7 +28,7 @@ void pow_mod(t_bint* a,
     barrettMu(mu, n, sizeMu, sizeN);
 
     mod(a,n,sizeA,sizeN);
-    //barrettMod(a, n, mu, sizeA, sizeN, sizeMu);
+    barrettMod(a, n, mu, sizeA, sizeN, sizeMu);
 
     if (isNull(a,sizeA) && isNull(b,sizeB)) {
         throw URException();
@@ -61,8 +62,9 @@ void pow_mod(t_bint* a,
                 //mulMod(result,tmp,n,sizeR,sizeT,sizeN);
                 barrettMulMod(result,tmp,n,mu,sizeR,sizeT,sizeN,sizeMu);
             }
-            //sqrMod(tmp,n,sizeT,sizeN);
-            barrettSqrMod(tmp, n, mu, sizeT, sizeN, sizeMu);
+
+            sqrMod(tmp,n,sizeT,sizeN);
+            //barrettSqrMod(tmp, n, mu, sizeT, sizeN, sizeMu);
 
             if (isNull(tmp,sizeT)) {
                 break;
@@ -74,8 +76,8 @@ void pow_mod(t_bint* a,
             i++;
         }
         mov(a,result,sizeA);
-        //mod(a,n,sizeA,sizeN);
-        barrettMod(a, n, mu, sizeA, sizeN, sizeMu);
+        mod(a,n,sizeA,sizeN);
+        //barrettMod(a, n, mu, sizeA, sizeN, sizeMu);
 
         delete[] tmp;
         delete[] result;
@@ -90,35 +92,9 @@ void mulMod(t_bint* a,
             t_size sizeA,
             t_size sizeB,
             t_size sizeN) {
-    if (!sizeB) {
-        sizeB = sizeA;
-    }
-    if (!sizeN) {
-        sizeN = sizeA;
-    }
-    if (isNull(a,sizeA)) {
-    }
-    else if (cmp(a,1,sizeA) == CMP_EQUAL) {
-        // TODO: test for bug of incorrect output (mod forgotten)
-        setNull(a);
-        mov(a,b,sizeA < sizeB ? sizeA : sizeB);
-        mod(a,n,sizeA,sizeN);
-    }
-    else if (isNull(b,sizeB)) {
-        setNull(a,sizeA);
-    }
-    else {
-        mod(a,n,sizeA,sizeN);
-        t_size sizeT = sizeA + sizeB + 1;
-        t_bint* tmp = new t_bint[sizeT];
-        setNull(tmp,sizeT);
-        mov(tmp,a,sizeA);
-        mul(tmp,b,sizeT,sizeB);
-        mod(tmp,n,sizeT,sizeN);
-        setNull(a,sizeA);
-        mov(a,tmp,sizeA);
-        delete[] tmp;
-    }
+    mod(a,n,sizeA,sizeN);
+    mul(a,b,sizeA,sizeB);
+    mod(a,n,sizeA,sizeN);
 }
 
 void sqrMod(t_bint* a, t_bint* n, t_size sizeA, t_size sizeN) {
@@ -134,36 +110,9 @@ void barrettMulMod(t_bint* a,
                    t_size sizeB,
                    t_size sizeN,
                    t_size sizeMu) {
-    if (!sizeB) {
-        sizeB = sizeA;
-    }
-    if (!sizeN) {
-        sizeN = sizeA;
-    }
-    if (isNull(a,sizeA)) {
-    }
-    else if (cmp(a,1,sizeA) == CMP_EQUAL) {
-        // TODO: test for bug of incorrect output (mod forgotten)
-        setNull(a);
-        mov(a,b,sizeA < sizeB ? sizeA : sizeB);
-        mod(a,n,sizeA,sizeN);
-//        barrettMod(a,n,mu,sizeA,sizeN,sizeMu);
-    }
-    else if (isNull(b,sizeB)) {
-        setNull(a,sizeA);
-    }
-    else {
-        barrettMod(a,n,mu,sizeA,sizeN,sizeMu);
-        t_size sizeT = sizeA + sizeB + 1;
-        t_bint* tmp = new t_bint[sizeT];
-        setNull(tmp,sizeT);
-        mov(tmp,a,sizeA);
-        mul(tmp,b,sizeT,sizeB);
-        barrettMod(tmp,n,mu,sizeA,sizeN,sizeMu);
-        setNull(a,sizeA);
-        mov(a,tmp,sizeA);
-        delete[] tmp;
-    }
+    barrettMod(a,n,mu,sizeA,sizeN,sizeMu);
+    mul(a,b,sizeA,sizeB);
+    barrettMod(a,n,mu,sizeA,sizeN,sizeMu);
 }
 
 void barrettSqrMod(t_bint* a, t_bint* n, t_bint* mu, t_size sizeA,

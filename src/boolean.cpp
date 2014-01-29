@@ -23,7 +23,7 @@ void swr(t_bint* a, t_size shift, t_size size) {
     }
     else if (shift > 0) {
         t_size i;
-        for (i = 0; i < size - shift - 1; i++) {
+        for (i = 0; i < size - shift; i++) {
             a[i] = a[i + shift];
         }
         for (i = size - shift; i < size; i++) {
