@@ -36,11 +36,13 @@ clean:
 	rm -rf $(OBJDIR)
 	rm -rf $(TSBDIR)
 
-$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cpp
+$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cpp $(SRCDIR)/config.h
 	mkdir -p $(OBJDIR)
 	$(CC) $(CPPFLAGS) -c $< -o $@
 
-$(SRCDIR)/bigint.cpp: $(SRCDIR)/config.h
+$(SRCDIR)/bigint.cpp: $(SOURCES) $(SRCDIR)/config.h
+$(OBJDIR)/bigint.o: $(SRCDIR)/bigint.cpp
+
 $(MAIN_SRC): $(SRCDIR)/bigint.cpp
 $(MAIN_OBJ): $(MAIN_SRC)
 	mkdir -p $(OBJDIR)
@@ -56,7 +58,9 @@ $(TSTDIR)/bigint.cpp: $(SRCDIR)/bigint.cpp
 $(TSTDIR)/modular.cpp: $(SRCDIR)/bigint.cpp
 $(TSTDIR)/config.cpp: $(SRCDIR)/config.h
 
-$(TEST_OBJECTS): $(OBJDIR)/test_%.o : $(TSTDIR)/%.cpp
+$(TEST_SOURCES): $(SRCDIR)/bigint.cpp $(SRCDIR)/config.h
+
+$(TEST_OBJECTS): $(OBJDIR)/test_%.o : $(TSTDIR)/%.cpp $(SRCDIR)/bigint.cpp
 	mkdir -p $(OBJDIR)
 	$(CC) $(CPPFLAGS) -c $< -o $@ $(TEST_COMPILATION_SUFFIX)
 
