@@ -16,3 +16,6 @@ int subI(BigInt* bigInts);
 int mulI(BigInt* bigInts);
 int divI(BigInt* bigInts);
 int powI(BigInt* bigInts);
+int gcdEuI(BigInt* bigInts);
+int gcdBinI(BigInt* bigInts);
+int lcmI(BigInt* bigInts);
