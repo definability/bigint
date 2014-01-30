@@ -58,7 +58,7 @@ void mul(t_bint* a, t_bint* b, t_size sizeA, t_size sizeB) {
                 for (i = s; i >= 0; i--) {
                     if (mswA > i && mswB > s - i) {
                         mulIteration(t, a[i], b[s-i]);
-                        isNull(t,0);
+                        isNull(t,0); // FIXME: memory error without this
                     }
                 }
                 w[s] = t[0];
