@@ -50,8 +50,6 @@ BOOST_AUTO_TEST_CASE(PowerMod) {
     n.generate();
     n >>= (NUMBER_CAPACITY / 2);
     x %= n;
-    cerr << "x = " << x << endl;
-    cerr << "n = " << n << endl;
     BOOST_REQUIRE_EQUAL(x.powMod((BigInt)1,n), x);
     BOOST_REQUIRE_EQUAL(x.powMod((BigInt)2,n), (x * x) % n);
 
