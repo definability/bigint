@@ -51,6 +51,6 @@ Usage of ```time```:
 ###Memory leaks testing
 Use valgrind. For example:
 ```bash
-valgrind --tool=memcheck --leak-check=full ./tests/bin/time 5 1 2>err.log
+valgrind --track-origins=yes --tool=memcheck --leak-check=full ./tests/bin/time 5 1 2>err.log
 ```
 Flag ```-g``` in ```g++``` allows you to see the line of code in which the memory leak could be fixed.
