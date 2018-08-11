@@ -1,3 +1,5 @@
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fchar-lie%2Fbigint.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fchar-lie%2Fbigint?ref=badge_shield)
+
 BigInt
 ======
 
@@ -54,3 +56,7 @@ Use valgrind. For example:
 valgrind --track-origins=yes --tool=memcheck --leak-check=full ./tests/bin/time 5 1 2>err.log
 ```
 Flag ```-g``` in ```g++``` allows you to see the line of code in which the memory leak could be fixed.
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fchar-lie%2Fbigint.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fchar-lie%2Fbigint?ref=badge_large)
