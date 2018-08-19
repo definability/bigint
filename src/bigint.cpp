@@ -385,6 +385,10 @@ public:
         return (int)this->value[0];
     }
 
+    explicit operator bool() {
+        return isNull(this->value, BLOCKS_NUMBER);
+    }
+
     friend ostream& operator<<(ostream& os, const BigInt& bi) {
         t_size i = BLOCKS_NUMBER;
         while (i-- > 1 && bi[i] == 0) {}
