@@ -12,7 +12,7 @@ void mod(t_bint* a,
          t_size sizeA,
          t_size sizeB,
          t_bint* quotient,
-         t_size sizeQ) throw (DBZException) {
+         t_size sizeQ) {
     if (isNull(b)) {
         throw DBZException();
     }
@@ -97,7 +97,7 @@ void mod(t_bint* a,
 }
 
 void div(t_bint* a, t_bint* b, t_size sizeA,
-         t_size sizeB) throw (DBZException) {
+         t_size sizeB) {
     if (!sizeB || sizeB > sizeA) {
         sizeB = sizeA;
     }
