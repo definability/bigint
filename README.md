@@ -10,6 +10,8 @@ My biginteger realization with Boost library tests. Just a lab for my university
 - [x] LCM
 - [x] Interface (read/write)
 
+It has not been maintained or used for long, so it is archived.
+
 ## How to make
 
 ```bash
